@@ -17,19 +17,10 @@ public class HackathonApplication {
         SpringApplication.run(HackathonApplication.class, args);
     }
 
-
     @GetMapping("/")
     public String index() {
 
         return "index";
-    }
-
-    @GetMapping("/profile")
-    public TschiboProfile profile() {
-
-        // ask solar
-
-        return new TschiboProfile();
     }
 
     @GetMapping("/product")
@@ -64,11 +55,7 @@ public class HackathonApplication {
 }
 
 
-class TschiboProfile {
 
-    String name;
-    List<String> buyedProducts;
-}
 
 class TschiboProduct {
     String name;

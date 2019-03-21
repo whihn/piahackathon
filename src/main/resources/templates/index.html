@@ -103,10 +103,10 @@
 
 
     $('#accountButton').on('click', function (e) {
-        e.preventDefault()
-        axios.get('/profile', {
+        e.preventDefault();
+        axios.get('/api/profile', {
             params: {
-                ID: '123'
+                profileId: '123'
             }
         })
             .then(function (response) {
