@@ -32,10 +32,16 @@ public class HackathonApplication {
         return new TschiboProfile();
     }
 
-    @GetMapping("/image")
+    @GetMapping("/product")
     public TschiboProduct getProduct(@RequestParam byte[] image) {
 
         return new TschiboProduct();
+    }
+
+    @GetMapping("/image")
+    public byte[] getImage(@RequestParam String imageId) {
+
+        return new byte[0];
     }
 
     @GetMapping("/toplist")
@@ -67,6 +73,4 @@ class TschiboProfile {
 class TschiboProduct {
     String name;
     Double price;
-    byte[] image;
-
 }
