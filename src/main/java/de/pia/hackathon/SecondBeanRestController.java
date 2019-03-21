@@ -10,15 +10,15 @@ public class SecondBeanRestController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public TschiboProfile profile(@RequestParam String profileId) {
+    public TchiboProfile profile(@RequestParam String profileId) {
 
         // ask solar
 
-        return new TschiboProfile();
+        return new TchiboProfile();
     }
 }
 
-class TschiboProfile {
+class TchiboProfile {
 
     private String name;
     private List<String> boughtProducts;
