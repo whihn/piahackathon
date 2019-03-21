@@ -40,7 +40,7 @@ public class SecondBeanRestController {
         TchiboProduct product2 = new TchiboProduct();
         product2.name = "p2";
         product2.price = 4.99;
-        return asList(product2, product2);
+        return asList(product1, product2);
     }
 
     @GetMapping("/communitylist")

@@ -102,6 +102,10 @@
 
 </div>
 <!-- /.container -->
+
+<div id="toplistContainer" style="padding: 0;">
+    <ul class="list-group" id="toplist"></ul>
+</div>
 </body>
 <script>
         axios.get('/api/toplist', {
@@ -109,7 +113,13 @@
                  }
              })
              .then(function(response) {
-                 console.log(response);
+                 console.log(response.data);
+
+                 response.data.forEach((product) => {
+                     const li = document.createElement("li");
+                     li.append(product.name);
+                     $('#toplist').append(li);
+                 });
              })
              .catch(function(error) {
                  console.log(error);
