@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -26,6 +27,8 @@ public class HackathonApplication {
     @GetMapping("/profile")
     public TschiboProfile profile() {
 
+        // ask solar
+
         return new TschiboProfile();
     }
 
@@ -35,6 +38,23 @@ public class HackathonApplication {
         return new TschiboProduct();
     }
 
+    @GetMapping("/toplist")
+    public List<TschiboProduct> topList() {
+
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/communitylist")
+    public List<TschiboProduct> communitylist() {
+
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/topRated")
+    public List<TschiboProduct> topRated() {
+
+        return new ArrayList<>();
+    }
 }
 
 
