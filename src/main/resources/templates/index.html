@@ -117,7 +117,7 @@
 
                  response.data.forEach((product) => {
                      const li = document.createElement("li");
-                     li.append(product.name);
+                     li.append(product.name + ' - ' + product.price + '€');
                      $('#toplist').append(li);
                  });
              })
