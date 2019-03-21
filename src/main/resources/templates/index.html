@@ -28,6 +28,8 @@
 
     <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Thumbnail Gallery</h1>
 
+    <button id="accountButton" type="button" class="btn btn-primary">Account</button>
+
     <hr class="mt-2 mb-5">
 
     <div class="row text-center text-lg-left">
@@ -98,17 +100,23 @@
 <!-- /.container -->
 </body>
 <script>
-    axios.get('/profile', {
-        params: {
-            ID: tschiboID
-        }
-    })
-        .then(function (response) {
-            console.log(response);
+
+
+    $('#accountButton').on('click', function (e) {
+        e.preventDefault()
+        axios.get('/profile', {
+            params: {
+                ID: '123'
+            }
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+
 
 </script>
 </html>
