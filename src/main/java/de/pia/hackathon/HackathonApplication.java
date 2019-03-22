@@ -37,6 +37,11 @@ public class HackathonApplication {
         return "shoppingCart";
     }
 
+    @GetMapping("/sellProduct")
+    public String sellProduct() {
+        return "sellProduct";
+    }
+
 }
 
 
