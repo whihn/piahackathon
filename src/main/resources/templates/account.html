@@ -60,16 +60,19 @@
 </nav>
 <h4 class="row justify-content-center">Top Rated</h4>
 <div class="row justify-content-center">
-    <div id="toplist" class="d-flex align-content-start flex-wrap"/>
+    <div id="toplist" class="d-flex align-content-start flex-wrap">
+    </div>
 </div>
 <h4 class="row justify-content-center">Bought Products</h4>
 <div class="row justify-content-center">
-    <div id="boughtproducts" class="d-flex align-content-start flex-wrap"/>
+    <div id="boughtproducts" class="d-flex align-content-start flex-wrap">
+    </div>
 </div>
 <h4 class="row justify-content-center">Selling Products</h4>
 <div class="row justify-content-center">
-    <div id="sellingproducts" class="d-flex align-content-start flex-wrap"/>
-</div>s
+    <div id="sellingproducts" class="d-flex align-content-start flex-wrap">
+    </div>
+</div>
 
 <script>
     function productCard(product) {
@@ -107,16 +110,15 @@
             ' </div>';
     }
 
-    function offerProduct(product) {
+    function offerProduct(pid) {
         $('#boughtproducts').empty();
         $('#sellingproducts').empty();
         axios.get('/api/offerproduct', {
             params: {
-                pid: '4711'
+                pid: pid
             }
         }).then((response) => {
             const profile = response.data;
-            console.log(profile);
 
             profile.boughtProducts.forEach((transaction) => {
                 $('#boughtproducts').append(productTransactionCard(transaction));
@@ -131,7 +133,6 @@
         params: {}
     }).then((response) => {
         const profile = response.data;
-        console.log('loading profile', profile);
 
         profile.boughtProducts.forEach((transaction) => {
             $('#boughtproducts').append(productTransactionCard(transaction));

@@ -55,15 +55,25 @@ public class SecondBeanRestController {
 
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
-		Product product = productRepository.findById("400074462").get();
+		Product product;
+		if ("676699932".equals(pid)) {
+			product = new Product();
+			product.setId(pid);
+			product.setName("Danny Dino");
+			product.setPrice("99,99");
+			product.setImageUrl("http://localhost:8080/images/professionalPhotoFromTchibo.jpg");
+		}
+		else {
+			product = productRepository.findById(pid).get();
+		}
 		Product product2 = productRepository.findById("400078565").get();
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
 		TchiboProfile lisa = new TchiboProfile("lisa");
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
-		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product2)));
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product)));
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product2)));
 
 		return tchiboProfile;
 	}
