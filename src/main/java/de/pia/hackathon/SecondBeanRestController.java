@@ -128,13 +128,15 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toplist")
 	public List<TchiboProduct> topList() {
-		// FIXME
-		TchiboProduct product1 = new TchiboProduct("Mega Minion");
-		product1.name = "p1";
-		product1.price = "9.90";
-		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
-		product2.name = "p2";
-		product2.price = "4.99";
+		TchiboProduct product1 = new TchiboProduct("Damen-Thermo-Kapuzenlaufshirt");
+		product1.pid = "200020329";
+		product1.price = "10,00";
+		product1.imageUrl = "https://media2.tchibo-content.de/newmedia/art_img/10/2a/96955586f0d2/MAIN_HD-IMPORTED"
+				+ "/48623742cf20de61/Damen-Thermo-Kapuzenlaufshirt-Anthrazit.jpg";
+		TchiboProduct product2 = new TchiboProduct("2 Paar Socken mit Baumwolle");
+		product2.pid = "400074452";
+		product2.price = "4,00";
+		product2.imageUrl = "https://media2.tchibo-content.de/newmedia/art_img/MAIN_HD-IMPORTED/bf5394772f1dcb33/.jpg";
 		return asList(product1, product2);
 	}
 
