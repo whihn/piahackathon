@@ -18,15 +18,20 @@ public class SecondBeanRestController {
 	@ResponseBody
 	public TchiboProfile profile(@RequestParam String profileId) {
 
-		// ask solar
 
-		return new TchiboProfile();
+		TchiboProfile tchiboProfile = new TchiboProfile();
+		tchiboProfile.addFriend(new TchiboProfile("bob"));
+		tchiboProfile.addFriend(new TchiboProfile("lisa"));
+		tchiboProfile.addBoughtProduct(new TchiboProduct("Theo Tiger"));
+		tchiboProfile.addSellingProduct(new TchiboProduct("Mega Minion"));
+
+		return tchiboProfile;
 	}
 
 	@GetMapping("/product")
 	public TchiboProduct getProduct(@RequestParam byte[] image) {
 
-		return new TchiboProduct();
+		return new TchiboProduct("Theo Tiger");
 	}
 
 	@GetMapping("/image")
@@ -43,12 +48,12 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toplist")
 	public List<TchiboProduct> topList() {
-		TchiboProduct product1 = new TchiboProduct();
+		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
 		product1.price = 9.90;
 		product1.imageId = "demo_image";
 		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
-		TchiboProduct product2 = new TchiboProduct();
+		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
 		product2.name = "p2";
 		product2.price = 4.99;
 		product2.imageId = "demo_image2";
@@ -77,6 +82,10 @@ class TchiboProduct {
 	String imageId;
 	String imageUrl;
 
+	public TchiboProduct(String name) {
+		this.name = name;
+	}
+
 	public Double getPrice() {
 		return price;
 	}
@@ -97,13 +106,44 @@ class TchiboProduct {
 class TchiboProfile {
 
 	private String name;
-	private List<String> boughtProducts;
+	private List<TchiboProduct> boughtProducts = new ArrayList<>();
+	private List<TchiboProduct> sellingProducts = new ArrayList<>();
+	private List<TchiboProfile> friends = new ArrayList<>();
+
+	public TchiboProfile() {
+	}
+
+	public TchiboProfile(String name) {
+		this.name = name;
+	}
+
+	public void addFriend(TchiboProfile friend){
+		friends.add(friend);
+	}
 
 	public String getName() {
 		return name;
 	}
 
-	public List<String> getBoughtProducts() {
+	public List<TchiboProduct> getBoughtProducts() {
 		return boughtProducts;
 	}
+
+	public List<TchiboProfile> getFriends() {
+		return friends;
+	}
+
+	public void addBoughtProduct(TchiboProduct product) {
+		this.boughtProducts.add(product);
+	}
+
+	public List<TchiboProduct> getSellingProducts() {
+		return sellingProducts;
+	}
+
+	public void addSellingProduct(TchiboProduct product) {
+		this.sellingProducts.add(product);
+	}
 }
+
+
