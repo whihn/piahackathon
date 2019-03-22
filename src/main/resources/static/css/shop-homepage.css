@@ -16,3 +16,17 @@ body {
   height: 108px;
   color: #2259ab;
 }
+
+.tchibo-logo-small {
+  text-indent: -99999px;
+  float: left;
+  position: relative;
+  z-index: 1;
+  background-position: 0 0;
+  overflow: hidden;
+  display: block;
+  background-image: url(https://media9.tchibo-content.de/newmedia/page/img/b782847c6ea32e93/sprite.png);
+  width: 40px;
+  height: 40px;
+  color: #2259ab;
+}
