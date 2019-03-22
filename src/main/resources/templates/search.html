@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
     Searchfield goes here...
+<script>
+    axios.get('/api/toptags', {
+             params: {
+             }
+         })
+         .then(function(response) {
+             const topTags = response.data;
+
+             console.log(topTags);
+         })
+         .catch(function(error) {
+             console.log(error);
+         });
+
+    axios.get('/api/search', {
+             params: {
+             }
+         })
+         .then(function(response) {
+             const products = response.data;
+
+             products.forEach((product) => {
+                 const tags = product.searchTags;
+                 console.log("tags from product " + product.name + ': ', tags);
+             });
+             console.log(response);
+         })
+         .catch(function(error) {
+             console.log(error);
+         });
+
+</script>
 </body>
 </html>

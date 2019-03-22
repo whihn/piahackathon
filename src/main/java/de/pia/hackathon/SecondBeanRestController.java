@@ -18,8 +18,6 @@ public class SecondBeanRestController {
 	@GetMapping("/profile")
 	@ResponseBody
 	public TchiboProfile profile() {
-
-
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
 		TchiboProfile lisa = new TchiboProfile("lisa");
@@ -42,6 +40,20 @@ public class SecondBeanRestController {
 	public TchiboProduct getProduct(@RequestParam byte[] image) {
 
 		return new TchiboProduct("Theo Tiger");
+	}
+
+	@GetMapping("/search")
+	public List<TchiboProduct> searchProducts() {
+		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
+		product1.searchTags = asList("4er", "gepolstert", "pink");
+		TchiboProduct product2 = new TchiboProduct("Leo Lausemaus");
+		product2.searchTags = asList("8er", "foo", "bar");
+		return asList(product1, product2);
+	}
+
+	@GetMapping("/toptags")
+	public List<TopTag> topTags() {
+		return asList(new TopTag("top1", 10), new TopTag("top2", 5), new TopTag("top3", 13));
 	}
 
 	@GetMapping("/image")
@@ -83,6 +95,26 @@ public class SecondBeanRestController {
 		return new ArrayList<>();
 	}
 
+	private class TopTag {
+
+		private String tag;
+		private int count;
+
+		public TopTag() {}
+
+		public TopTag(String tag, int count) {
+			this.tag = tag;
+			this.count = count;
+		}
+
+		public int getCount() {
+			return count;
+		}
+
+		public String getTag() {
+			return tag;
+		}
+	}
 }
 
 class TchiboProduct {
@@ -91,6 +123,7 @@ class TchiboProduct {
 	Double price;
 	String imageId;
 	String imageUrl;
+	List<String> searchTags;
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -98,6 +131,10 @@ class TchiboProduct {
 
 	public Double getPrice() {
 		return price;
+	}
+
+	public List<String> getSearchTags() {
+		return searchTags;
 	}
 
 	public String getName() {
