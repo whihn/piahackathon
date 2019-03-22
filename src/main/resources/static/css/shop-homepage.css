@@ -90,3 +90,27 @@ body {
     background-color: #fff;
     color: #3498db;
 }
+
+.mdl-card {
+    margin: 5px !important;
+    width: 115px !important;
+    height: 200px  !important;
+}
+
+.mdl-card__title {
+    padding: 2px !important;
+}
+
+.mdl-card__title-text {
+    font-size: medium !important;
+}
+
+.mdl-card__actions {
+    display: flex;
+    box-sizing:border-box;
+    align-items: center;
+}
+.mdl-card__media > img {
+    max-width: 100%;
+    max-height: 100%;
+}
