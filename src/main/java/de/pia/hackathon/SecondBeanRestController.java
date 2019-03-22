@@ -53,6 +53,14 @@ public class SecondBeanRestController {
 		return asList(product1, product2);
 	}
 
+	@GetMapping("/tagclicked")
+	public List<TchiboProduct> tagClicked(@RequestParam String tagText) {
+		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
+		product1.price = 9.99;
+		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
+		return asList(product1);
+	}
+
 	@GetMapping("/toptags")
 	public List<TopTag> topTags() {
 		return asList(new TopTag("top1", 10), new TopTag("top2", 5), new TopTag("top3", 13));

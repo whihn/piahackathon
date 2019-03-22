@@ -134,7 +134,7 @@
         tags.forEach((tag) => {
             const li = document.createElement("li");
             const a = document.createElement('a');
-            a.setAttribute('href', '#');
+            a.setAttribute('onclick', 'onTagClicked(\'' + tag.tag + '\')');
             a.append(tag.tag);
             const span = document.createElement('span');
             span.append(tag.count);
@@ -144,35 +144,37 @@
         });
     }
 
+    function onSearchResponse(response) {
+        const products = response.data,
+            tags = [];
+
+        $('#resultList').empty();
+
+        products.forEach((product) => {
+            product.searchTags.forEach((tag) => {
+                tags.push(tag);
+            });
+            $('#resultList').append(productRow(product));
+        });
+        renderTags(tags);
+    }
+
+    function onTagClicked(tag) {
+        axios.get('/api/tagclicked', {
+                 params: {
+                     tagText: tag
+                 }
+             })
+             .then(onSearchResponse);
+
+    }
+
     axios.get('/api/toptags', {
              params: {}
          })
-         .then(function(response) {
+         .then(response => {
              const topTags = response.data;
              renderTags(topTags);
-         })
-         .catch(function(error) {
-             console.log(error);
-         });
-
-    axios.get('/api/toplist', {
-             params: {}
-         })
-         .then(function(response) {
-             console.log(response.data);
-
-             response.data.forEach((product) => {
-                 const li = document.createElement("li");
-                 const img = document.createElement('img');
-                 img.setAttribute('class', 'img-fluid img-thumbnail');
-                 img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
-                 li.appendChild(img);
-                 li.append(product.name + ' - ' + product.price + '€');
-                 $('#toplist').append(li);
-             });
-         })
-         .catch(function(error) {
-             console.log(error);
          });
 
     $('#searchButton').on('click', function(e) {
@@ -182,21 +184,7 @@
                      searchText: $('#searchText').val()
                  }
              })
-             .then(function(response) {
-                 const products = response.data,
-                     tags = [];
-
-                 products.forEach((product) => {
-                     product.searchTags.forEach((tag) => {
-                         tags.push(tag);
-                     });
-                     $('#resultList').append(productRow(product));
-                 });
-                 renderTags(tags);
-             })
-             .catch(function(error) {
-                 console.log(error);
-             });
+             .then(onSearchResponse);
     })
 
 
