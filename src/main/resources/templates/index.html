@@ -7,14 +7,10 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
 
-    <!-- Custom styles for this template -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="css/shop-homepage.css" rel="stylesheet">
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -51,32 +47,102 @@
         </div>
     </div>
 </nav>
-<!--<div class="container">
 
-    <button id="accountButton" type="button" class="btn btn-primary">Account</button>
-    <hr class="mt-2 mb-5">
 
-</div>-->
-
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <form class="card card-sm">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col-auto">
+                    <i class="fas fa-search h4 text-body"></i>
+                </div>
+                <!--end of col-->
+                <div class="col">
+                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords" id="searchText">
+                </div>
+                <!--end of col-->
+                <div class="col-auto">
+                    <button class="btn btn-lg btn-success" id="searchButton">Search</button>
+                </div>
+                <!--end of col-->
+            </div>
+        </form>
+    </div>
+    <!--end of col-->
+</div>
 <div class="tagcloud03">
     <ul id="toptags">
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
-        <li><a href="#">tag<span>20</span></a></li>
+        <!--<li><a href="#">tag<span>20</span></a></li>-->
     </ul>
 </div>
 
-<div id="toplistContainer" style="padding: 0;">
-    <ul class="list-group" id="toplist"></ul>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <h2>Search Results</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Price</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody id="resultList">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
 </body>
 <script>
-        axios.get('/api/toplist', {
+    function productRow(product) {
+        return '                <tr>\n' +
+            '                    <td class="col-md-6">\n' +
+            '                        <div class="media">\n' +
+            '                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="' + product.imageUrl + '" style="width: 72px; height: 72px;"> </a>\n' +
+            '                            <div class="media-body">\n' +
+            '                                <h4 class="media-heading"><a href="#">' + product.name + '</a></h4>\n' +
+            '                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>\n' +
+            '                            </div>\n' +
+            '                        </div></td>\n' +
+            '                    <td class="col-md-1 text-center"><strong>' + product.price + ' €</strong></td>\n' +
+            '                    <td class="col-md-1">\n' +
+            '                        <button type="button" class="btn">\n' +
+            '                            <span class="glyphicon glyphicon-thumbs-up"></span> \n' +
+            '                        </button></td>\n' +
+            '                    <td class="col-md-1">\n' +
+            '                        <button type="button" class="btn">\n' +
+            '                            <span class="glyphicon glyphicon-thumbs-down"></span> \n' +
+            '                        </button></td>\n' +
+            '                </tr>\n';
+    }
+
+    axios.get('/api/toptags', {
+             params: {
+             }
+         })
+         .then(function(response) {
+             const topTags = response.data;
+
+             topTags.forEach((tag) => {
+                 const li = document.createElement("li");
+                 const a = document.createElement('a');
+                 a.setAttribute('href', '#');
+                 a.append(tag.tag);
+                 const span = document.createElement('span');
+                 span.append(tag.count);
+                 a.appendChild(span);
+                 li.appendChild(a);
+                 $('#toptags').append(li);
+             });
+         })
+         .catch(function(error) {
+             console.log(error);
+         });
+
+    axios.get('/api/toplist', {
                  params: {
                  }
              })
@@ -98,15 +164,19 @@
              });
 
 
-    $('#accountButton').on('click', function(e) {
+    $('#searchButton').on('click', function(e) {
         e.preventDefault();
-        axios.get('/api/profile', {
+        axios.get('/api/search', {
                  params: {
-                     profileId: '123'
+                     searchText: $('#searchText').val()
                  }
              })
              .then(function(response) {
-                 console.log(response);
+                 const products = response.data;
+
+                 products.forEach((product) => {
+                     $('#resultList').append(productRow(product));
+                 });
              })
              .catch(function(error) {
                  console.log(error);

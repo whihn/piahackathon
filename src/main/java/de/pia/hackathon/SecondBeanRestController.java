@@ -43,10 +43,12 @@ public class SecondBeanRestController {
 	}
 
 	@GetMapping("/search")
-	public List<TchiboProduct> searchProducts() {
+	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
 		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
+		product1.price = 9.99;
 		product1.searchTags = asList("4er", "gepolstert", "pink");
 		TchiboProduct product2 = new TchiboProduct("Leo Lausemaus");
+		product2.price = 10.99;
 		product2.searchTags = asList("8er", "foo", "bar");
 		return asList(product1, product2);
 	}
