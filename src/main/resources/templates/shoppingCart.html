@@ -118,7 +118,6 @@
     }
 
     function offerProduct(product) {
-        const pid = product.pid;
         $('#boughtproducts').empty();
         $('#sellingproducts').empty();
         axios.get('/api/offerproduct', {
