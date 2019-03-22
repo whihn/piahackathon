@@ -24,12 +24,14 @@ public class SecondBeanRestController {
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
 		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
+		theoTiger.pid = "4711";
 		theoTiger.price = 99.78;
 		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		Transaction boughtProduct = new Transaction(new Date(), lisa, theoTiger);
 		tchiboProfile.addBoughtProduct(boughtProduct);
 		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
 		megaMinion.price = 1000.0;
+		megaMinion.pid = "4712";
 		Transaction sellingProduct = new Transaction(new Date(), bob, megaMinion);
 		tchiboProfile.addSellingProduct(sellingProduct);
 
@@ -40,6 +42,26 @@ public class SecondBeanRestController {
 	public TchiboProduct getProduct(@RequestParam byte[] image) {
 
 		return new TchiboProduct("Theo Tiger");
+	}
+
+	@GetMapping("/offerproduct")
+	public TchiboProfile offerProduct(@RequestParam String pid) {
+		TchiboProfile tchiboProfile = new TchiboProfile();
+		TchiboProfile bob = new TchiboProfile("bob");
+		TchiboProfile lisa = new TchiboProfile("lisa");
+		tchiboProfile.addFriend(bob);
+		tchiboProfile.addFriend(lisa);
+		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
+		theoTiger.pid = "4711";
+		theoTiger.price = 99.78;
+		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
+		megaMinion.price = 1000.0;
+		megaMinion.pid = "4712";
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, megaMinion));
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, theoTiger));
+
+		return tchiboProfile;
 	}
 
 	@GetMapping("/search")
@@ -130,6 +152,7 @@ class TopTag {
 
 class TchiboProduct {
 
+	String pid;
 	String name;
 	Double price;
 	String imageId;
@@ -138,6 +161,10 @@ class TchiboProduct {
 
 	public TchiboProduct(String name) {
 		this.name = name;
+	}
+
+	public String getPid() {
+		return pid;
 	}
 
 	public Double getPrice() {

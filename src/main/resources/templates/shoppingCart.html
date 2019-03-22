@@ -116,9 +116,31 @@
             '                        </button></td>\n' +
             '                </tr>\n';
     }
+
+    function offerProduct(product) {
+        const pid = product.pid;
+        $('#boughtproducts').empty();
+        $('#sellingproducts').empty();
+        axios.get('/api/offerproduct', {
+            params: {
+                pid: '4711'
+            }
+        }).then((response) => {
+            const profile = response.data;
+            console.log(profile);
+
+            profile.boughtProducts.forEach((transaction) => {
+                $('#boughtproducts').append(transactionRow(transaction));
+            });
+            profile.sellingProducts.forEach((transaction) => {
+                $('#sellingproducts').append(transactionRow(transaction));
+            });
+        });
+    }
+
     function transactionRow(transaction) {
         const product = transaction.product;
-        return '                <tr>\n' +
+        return '                <tr id="pid_' + product.pid + '">\n' +
             '                    <td class="col-md-6">\n' +
             '                        <div class="media">\n' +
             '                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="' + product.imageUrl + '" style="width: 72px; height: 72px;"> </a>\n' +
@@ -132,8 +154,8 @@
             '                    <td class="col-md-1"><strong>' + transaction.toUser.name + '</strong></td>\n' +
             '                    <td class="col-md-1 text-center"><strong>' + product.price + ' €</strong></td>\n' +
             '                    <td class="col-md-1">\n' +
-            '                        <button type="button" class="btn btn-danger">\n' +
-            '                            <span class="glyphicon glyphicon-remove"></span> Remove\n' +
+            '                        <button type="button" class="btn btn-danger" onClick="offerProduct(\'' + product.pid + '\');">\n' +
+            '                            <span class="glyphicon glyphicon-remove"></span> Offer\n' +
             '                        </button></td>\n' +
             '                </tr>\n';
     }
