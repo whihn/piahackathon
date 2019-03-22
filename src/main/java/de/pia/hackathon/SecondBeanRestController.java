@@ -109,7 +109,9 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toptags")
 	public List<ProductTag> topTags() {
-		return asList(new ProductTag("top1", 10), new ProductTag("top2", 5), new ProductTag("top3", 13));
+		return asList(new ProductTag("auto", 4),
+				new ProductTag("Schwarz", 5),
+				new ProductTag("5er Pack", 4));
 	}
 
 	@GetMapping("/image")
@@ -126,6 +128,7 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toplist")
 	public List<TchiboProduct> topList() {
+		// FIXME
 		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
 		product1.price = "9.90";
@@ -133,18 +136,6 @@ public class SecondBeanRestController {
 		product2.name = "p2";
 		product2.price = "4.99";
 		return asList(product1, product2);
-	}
-
-	@GetMapping("/communitylist")
-	public List<TchiboProduct> communitylist() {
-
-		return new ArrayList<>();
-	}
-
-	@GetMapping("/topRated")
-	public List<TchiboProduct> topRated() {
-
-		return new ArrayList<>();
 	}
 
 }

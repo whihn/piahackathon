@@ -216,7 +216,9 @@
 
         products.forEach((product) => {
             product.searchProductTags.forEach((name) => {
-                tags.push(name);
+                if (tags.length < 10) {
+                    tags.push(name);
+                }
             });
             $('#cardContainer').append(productCard(product));
         });
