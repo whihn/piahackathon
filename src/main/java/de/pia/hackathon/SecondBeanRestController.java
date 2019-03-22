@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -16,14 +17,23 @@ public class SecondBeanRestController {
 
 	@GetMapping("/profile")
 	@ResponseBody
-	public TchiboProfile profile(@RequestParam String profileId) {
+	public TchiboProfile profile() {
 
 
 		TchiboProfile tchiboProfile = new TchiboProfile();
-		tchiboProfile.addFriend(new TchiboProfile("bob"));
-		tchiboProfile.addFriend(new TchiboProfile("lisa"));
-		tchiboProfile.addBoughtProduct(new TchiboProduct("Theo Tiger"));
-		tchiboProfile.addSellingProduct(new TchiboProduct("Mega Minion"));
+		TchiboProfile bob = new TchiboProfile("bob");
+		TchiboProfile lisa = new TchiboProfile("lisa");
+		tchiboProfile.addFriend(bob);
+		tchiboProfile.addFriend(lisa);
+		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
+		theoTiger.price = 99.78;
+		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		Transaction boughtProduct = new Transaction(new Date(), lisa, theoTiger);
+		tchiboProfile.addBoughtProduct(boughtProduct);
+		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
+		megaMinion.price = 1000.0;
+		Transaction sellingProduct = new Transaction(new Date(), bob, megaMinion);
+		tchiboProfile.addSellingProduct(sellingProduct);
 
 		return tchiboProfile;
 	}
@@ -103,11 +113,38 @@ class TchiboProduct {
 	}
 }
 
+class Transaction {
+
+	private Date transactionDate;
+	private TchiboProfile toUser;
+	private TchiboProduct product;
+
+	public Transaction() {}
+
+	public Transaction(Date transactionDate, TchiboProfile toUser, TchiboProduct product) {
+		this.transactionDate = transactionDate;
+		this.toUser = toUser;
+		this.product = product;
+	}
+
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public TchiboProfile getToUser() {
+		return toUser;
+	}
+
+	public TchiboProduct getProduct() {
+		return product;
+	}
+}
+
 class TchiboProfile {
 
 	private String name;
-	private List<TchiboProduct> boughtProducts = new ArrayList<>();
-	private List<TchiboProduct> sellingProducts = new ArrayList<>();
+	private List<Transaction> boughtProducts = new ArrayList<>();
+	private List<Transaction> sellingProducts = new ArrayList<>();
 	private List<TchiboProfile> friends = new ArrayList<>();
 
 	public TchiboProfile() {
@@ -125,7 +162,7 @@ class TchiboProfile {
 		return name;
 	}
 
-	public List<TchiboProduct> getBoughtProducts() {
+	public List<Transaction> getBoughtProducts() {
 		return boughtProducts;
 	}
 
@@ -133,15 +170,15 @@ class TchiboProfile {
 		return friends;
 	}
 
-	public void addBoughtProduct(TchiboProduct product) {
-		this.boughtProducts.add(product);
+	public void addBoughtProduct(Transaction transaction) {
+		this.boughtProducts.add(transaction);
 	}
 
-	public List<TchiboProduct> getSellingProducts() {
+	public List<Transaction> getSellingProducts() {
 		return sellingProducts;
 	}
 
-	public void addSellingProduct(TchiboProduct product) {
+	public void addSellingProduct(Transaction product) {
 		this.sellingProducts.add(product);
 	}
 }
