@@ -15,8 +15,12 @@ public class HackathonApplication {
 
     @GetMapping("/")
     public String index() {
-
         return "index";
+    }
+
+    @GetMapping("/shop")
+    public String indexShop() {
+        return "indexShop";
     }
 
 }
