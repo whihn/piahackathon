@@ -126,40 +126,58 @@
         </div>
     </div>
 </nav>
+
 <div class="photo-container">
     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-        <a style="color: white"><i onclick="takePhoto()" class="material-icons">photo_camera</i></a>
+        <a style="color: white"><i data-toggle="modal" data-target="#photoModal" class="material-icons">photo_camera</i></a>
     </button>
 </div>
-<dialog class="mdl-dialog">
-    <h4 class="mdl-dialog__title">Allow data collection?</h4>
-    <div class="mdl-dialog__content">
-        <p>
-            Allowing us to collect data will let us get you the information you want faster.
-        </p>
+<h4 style="text-align: center; font-weight: bold">Give us a photo and we give you our data</h4>
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Photo </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="/images/takenPhoto.jpg" width="330" height="330">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="photoTaken()" class="btn btn-primary">Photo Okay</button>
+            </div>
+        </div>
     </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" onclick="closeDialog()" class="mdl-button">Agree</button>
-        <button type="button" onclick="closeDialog()" class="mdl-button close">Disagree</button>
-    </div>
-</dialog>
-<script>
-    var dialog = document.querySelector('dialog');
-    if (! dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
-    }
-
-    function takePhoto() {
-        let dialog = document.querySelector('dialog');
-        dialog.showModal();
-
-    }
-    function closeDialog() {
-        let dialog = document.querySelector('dialog');
-        dialog.close();
-
-    }
-</script>
+</div>
 </body>
+<script>
+    function photoTaken() {
+        $('#photoModal').modal('toggle');
 
+        alert('show');
+
+    }
+
+    function productCard(product) {
+        return ' <div class="mdl-card mdl-shadow--2dp">\n' +
+            '   <figure class="mdl-card__media">\n' +
+            /*  '    <img src="' + product.image +'" alt="" />\n' +*/
+            '    <img src="https://www.welt.de/img/kmpkt/mobile172859821/6122500917-ci102l-w1024/Grumpy-Cat-Visits-The-Broadway-Cast-of-Cats.jpg" alt="" />\n' +
+            '   </figure>\n'+
+            '   <div class="mdl-card__title mdl-card--expand">\n' +
+            '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
+            '   </div>' +
+            '  <div class="mdl-card__actions mdl-card--border">\n' +
+            '    <button id="buy" class="mdl-button mdl-button--icon mdl-button--colored"><i title="buy" class="material-icons">shopping-cart</i></button>\n' +
+            '    <button id="swap" class="mdl-button mdl-button--icon mdl-button--colored"><i title="swap"  class="material-icons">swap_horiz</i></button>\n' +
+            '    <button id="sell" class="mdl-button mdl-button--icon mdl-button--colored"><i title="sell" class="material-icons">loyalty</i></button>\n' +
+            '    <button id="wishlist" class="mdl-button mdl-button--icon mdl-button--colored"><i title="wishlist" class="material-icons">grade</i></button>\n' +
+            '  </div>\n' +
+            ' </div>';
+    }
+
+</script>
 </html>
