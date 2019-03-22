@@ -108,56 +108,10 @@
     </div>
 </div>-->
 <div id="cardContainer" class="d-flex align-content-start flex-wrap">
-    <div class="mdl-card mdl-shadow--2dp">
-            <figure class="mdl-card__media">
-                <img src="https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg" alt="" />
-            </figure>
-            <div class="mdl-card__title mdl-card--expand">
-                <p class="mdl-card__title-text">ProductName</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>
-            </div>
-        </div>
-    <div class="mdl-card mdl-shadow--2dp">
-            <figure class="mdl-card__media">
-                <img src="https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg" alt="" />
-            </figure>
-            <div class="mdl-card__title mdl-card--expand">
-                <h2 class="mdl-card__title-text">Update</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <p>Product details</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Read More</a>
-                <div class="mdl-layout-spacer"></div>
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>
-            </div>
-        </div>
-    <div class="mdl-card mdl-shadow--2dp">
-            <figure class="mdl-card__media">
-                <img src="https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg" alt="" />
-            </figure>
-            <div class="mdl-card__title mdl-card--expand">
-                <h2 class="mdl-card__title-text">Update</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <p>Product details</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Read More</a>
-                <div class="mdl-layout-spacer"></div>
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>
-            </div>
-    </div>
 
 </div>
 
-<div class="row justify-content-center">
+<!--<div class="row justify-content-center">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -176,7 +130,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 </body>
 <script>
     function productRow(product) {
@@ -210,8 +164,10 @@
             '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
             '   </div>' +
             '  <div class="mdl-card__actions mdl-card--border">\n' +
-            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>\n' +
-            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i title="buy" class="material-icons">shopping-cart</i></button>\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i title="swap"  class="material-icons">swap_horiz</i></button>\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i title="sell" class="material-icons">loyalty</i></button>\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i title="wishlist" class="material-icons">grade</i></button>\n' +
             '  </div>\n' +
             ' </div>';
     }
@@ -236,13 +192,13 @@
         const products = response.data,
             tags = [];
 
-        $('#resultList').empty();
+        $('#cardContainer').empty();
 
         products.forEach((product) => {
             product.searchTags.forEach((tag) => {
                 tags.push(tag);
             });
-            $('#resultList').append(productCard(product));
+            $('#cardContainer').append(productCard(product));
         });
         renderTags(tags);
     }

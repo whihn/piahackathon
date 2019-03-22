@@ -2,6 +2,10 @@ body {
   padding-top: 56px;
 }
 
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
 
 .tchibo-logo {
   text-indent: -99999px;
@@ -92,8 +96,8 @@ body {
 }
 
 .mdl-card {
-    margin: 5px !important;
-    width: 115px !important;
+    margin: 8px !important;
+    width: 171px !important;
     height: 200px  !important;
 }
 
@@ -109,6 +113,7 @@ body {
     display: flex;
     box-sizing:border-box;
     align-items: center;
+    padding: 0 !important;
 }
 .mdl-card__media > img {
     max-width: 100%;
