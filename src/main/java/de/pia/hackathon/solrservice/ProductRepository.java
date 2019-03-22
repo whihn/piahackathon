@@ -48,6 +48,27 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 		public void setImageUrl(String imageUrl) {
 			this.imageUrl = imageUrl;
 		}
+
+		public void setColor(String color) {
+			this.color = color;
+		}
+
+		public String getColor() {
+			return color;
+		}
+
+		public String getAssortmentCategory1() {
+			return assortmentCategory1;
+		}
+
+		public String getAssortmentCategory2() {
+			return assortmentCategory2;
+		}
+
+		public String getAssortmentCategory3() {
+			return assortmentCategory3;
+		}
+
 		@Id
 		@Indexed(name = "PRODUCT_ID", type = "string")
 		private String id;
@@ -57,5 +78,13 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 		private String price;
 		@Indexed(name = "MAIN_IMAGE_URL", type = "string")
 		private String imageUrl;
+		@Indexed(name = "COLOR", type = "string")
+		private String color;
+		@Indexed(name = "ASSORTMENT_CATEGORY1", type = "string")
+		private String assortmentCategory1;
+		@Indexed(name = "ASSORTMENT_CATEGORY2", type = "string")
+		private String assortmentCategory2;
+		@Indexed(name = "ASSORTMENT_CATEGORY3", type = "string")
+		private String assortmentCategory3;
 	}
 }

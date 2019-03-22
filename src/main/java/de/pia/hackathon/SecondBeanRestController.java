@@ -24,9 +24,9 @@ import de.pia.hackathon.solrservice.ProductRepository.Product;
 @RestController
 @RequestMapping("/api")
 public class SecondBeanRestController {
-	@Autowired
-	private ProductRepository productRepository;
-	
+
+	@Autowired private ProductRepository productRepository;
+
 	@GetMapping("/profile")
 	@ResponseBody
 	public TchiboProfile profile() {
@@ -79,22 +79,24 @@ public class SecondBeanRestController {
 		return tchiboProfile;
 	}
 
-	Function<Product, TchiboProduct> productToTchiboProduct
-    = new Function<Product, TchiboProduct>() {
-
-    public TchiboProduct apply(Product t) {
-    	TchiboProduct myProduct = new TchiboProduct(t.getName());
-        myProduct.pid = t.getId();
-        myProduct.price = Double.parseDouble(t.getPrice().replace(",", "."));
-        myProduct.imageUrl = t.getImageUrl();
-        return myProduct;
-    }
-};
+	Function<Product, TchiboProduct> productToTchiboProduct = t -> {
+		TchiboProduct myProduct = new TchiboProduct(t.getName());
+		myProduct.pid = t.getId();
+		myProduct.price = Double.parseDouble(t.getPrice().replace(",", "."));
+		myProduct.imageUrl = t.getImageUrl();
+		myProduct.searchTags.add(new TopTag(t.getColor(), 10));
+		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory1(), 11));
+		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory2(), 12));
+		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory3(), 13));
+		return myProduct;
+	};
 
 	@GetMapping("/search")
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
-		List<TchiboProduct> thiboProducts = productRepository.findByCustomQuery(searchText).stream().map(productToTchiboProduct)
-                .collect(Collectors.toList());
+		List<TchiboProduct> thiboProducts = productRepository.findByCustomQuery(searchText)
+				.stream()
+				.map(productToTchiboProduct)
+				.collect(Collectors.toList());
 		//product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
 		return thiboProducts;
 	}
@@ -129,11 +131,11 @@ public class SecondBeanRestController {
 		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
 		product1.price = 9.90;
-//		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		//		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
 		product2.name = "p2";
 		product2.price = 4.99;
-//		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
+		//		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
 		return asList(product1, product2);
 	}
 
@@ -156,7 +158,8 @@ class TopTag {
 	private String tag;
 	private int count;
 
-	public TopTag() {}
+	public TopTag() {
+	}
 
 	public TopTag(String tag, int count) {
 		this.tag = tag;
@@ -211,7 +214,8 @@ class Transaction {
 	private TchiboProfile toUser;
 	private TchiboProduct product;
 
-	public Transaction() {}
+	public Transaction() {
+	}
 
 	public Transaction(Date transactionDate, TchiboProfile toUser, TchiboProduct product) {
 		this.transactionDate = transactionDate;
@@ -246,7 +250,7 @@ class TchiboProfile {
 		this.name = name;
 	}
 
-	public void addFriend(TchiboProfile friend){
+	public void addFriend(TchiboProfile friend) {
 		friends.add(friend);
 	}
 
