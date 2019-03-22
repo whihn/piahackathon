@@ -110,9 +110,7 @@ body {
 
 .mdl-card__actions {
     display: flex;
-    box-sizing:border-box;
-    align-items: center;
-    padding: 0 !important;
+    justify-content: center;
 }
 .mdl-card__media > img {
     max-width: 100%;
