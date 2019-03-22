@@ -24,68 +24,52 @@
 
 <p/>
 <!-- Navigation -->
-<div class="row justify-content-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             class="svgWithFallback js-tp-imagelazy--loaded"
+             data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png"
+             alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             data-lazyload="true">
+        <a class="navbar-brand" href="#">secondBean</a>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
-                 class="svgWithFallback js-tp-imagelazy--loaded"
-                 data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png"
-                 alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
-                 data-lazyload="true">
-            <a class="navbar-brand" href="#">Second Bean</a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Account
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h4>Top Rated</h4>
-            <table class="table table-hover">
-                <tbody id="toplist">
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h4>Bought Products</h4>
-            <table class="table table-hover">
-                <tbody id="boughtproducts">
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h4>Selling Products</h4>
-            <table class="table table-hover">
-                <tbody id="sellingproducts">
-                </tbody>
-            </table>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Account
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+<h4 class="row justify-content-center">Top Rated</h4>
+<div class="row justify-content-center">
+    <div id="toplist" class="d-flex align-content-start flex-wrap"/>
 </div>
+<h4 class="row justify-content-center">Bought Products</h4>
+<div class="row justify-content-center">
+    <div id="boughtproducts" class="d-flex align-content-start flex-wrap"/>
+</div>
+<h4 class="row justify-content-center">Selling Products</h4>
+<div class="row justify-content-center">
+    <div id="sellingproducts" class="d-flex align-content-start flex-wrap"/>
+</div>s
 
 <script>
     function productCard(product) {
@@ -113,9 +97,6 @@
             '   </figure>\n' +
             '   <div class="mdl-card__title mdl-card--expand">\n' +
             '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
-            '      <p class="mdl-card__title-text">' + product.price + '</p>\n' +
-            '      <p class="mdl-card__title-text">' + transaction.transactionDate + '</p>\n' +
-            '      <p class="mdl-card__title-text">' + transaction.toUser.name + '</p>\n' +
             '   </div>' +
             '  <div class="mdl-card__actions mdl-card--border">\n' +
             '    <button id="buy" class="mdl-button mdl-button--icon mdl-button--colored"><i title="buy" class="material-icons">shopping-cart</i></button>\n' +

@@ -53,12 +53,6 @@ public class SecondBeanRestController {
 		return tchiboProfile;
 	}
 
-	@GetMapping("/product")
-	public TchiboProduct getProduct(@RequestParam byte[] image) {
-
-		return new TchiboProduct("Theo Tiger");
-	}
-
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
 		Product product = productRepository.findById("400074462").get();
@@ -68,13 +62,8 @@ public class SecondBeanRestController {
 		TchiboProfile lisa = new TchiboProfile("lisa");
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
-		TchiboProduct theoTiger = productToTchiboProduct.apply(product);
-		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
-		megaMinion.price = "1000.0";
-		megaMinion.pid = product2.getId();
-		megaMinion.imageUrl = product2.getImageUrl();
-		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, megaMinion));
-		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, theoTiger));
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product2)));
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product)));
 
 		return tchiboProfile;
 	}
