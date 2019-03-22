@@ -94,7 +94,7 @@
         const product = transaction.product;
         return ' <div class="mdl-card mdl-shadow--2dp">\n' +
             '   <figure class="mdl-card__media">\n' +
-            '      <img src="' + product.image +'" alt="" />\n' +
+            '      <img src="' + product.imageUrl +'" alt="" />\n' +
             '   </figure>\n'+
             '   <div class="mdl-card__title mdl-card--expand">\n' +
             '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
@@ -136,7 +136,7 @@
              }
     }).then((response) => {
         const profile = response.data;
-        console.log(profile);
+        console.log('loading profile', profile);
 
         profile.boughtProducts.forEach((transaction) => {
              $('#boughtproducts').append(productTransactionCard(transaction));
@@ -155,14 +155,6 @@
 
              response.data.forEach((product) => {
                  $('#toplist').append(productCard(product));
-
-                 // const li = document.createElement("li");
-                 // const img = document.createElement('img');
-                 // img.setAttribute('class', 'img-fluid img-thumbnail');
-                 // img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
-                 // li.appendChild(img);
-                 // li.append(product.name + ' - ' + product.price + '€');
-                 // $('#toplist').append(li);
              });
          });
 
