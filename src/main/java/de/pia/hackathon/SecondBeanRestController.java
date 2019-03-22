@@ -1,19 +1,25 @@
 package de.pia.hackathon;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.bind.annotation.*;
-
-import de.pia.hackathon.solrservice.ProductRepository;
-import de.pia.hackathon.solrservice.ProductRepository.Product;
+import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import de.pia.hackathon.solrservice.ProductRepository;
+import de.pia.hackathon.solrservice.ProductRepository.Product;
 
 @RestController
 @RequestMapping("/api")
@@ -58,10 +64,7 @@ public class SecondBeanRestController {
 		TchiboProfile lisa = new TchiboProfile("lisa");
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
-		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
-		theoTiger.pid = "4711";
-		theoTiger.price = 99.78;
-		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		TchiboProduct theoTiger = productToTchiboProduct.apply(product);
 		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
 		megaMinion.price = 1000.0;
 		megaMinion.pid = "4712";
@@ -71,15 +74,24 @@ public class SecondBeanRestController {
 		return tchiboProfile;
 	}
 
+	Function<Product, TchiboProduct> productToTchiboProduct
+    = new Function<Product, TchiboProduct>() {
+
+    public TchiboProduct apply(Product t) {
+    	TchiboProduct myProduct = new TchiboProduct(t.getName());
+        myProduct.pid = t.getId();
+        myProduct.price = Double.parseDouble(t.getPrice().replace(",", "."));
+        myProduct.imageUrl = t.getImageUrl();
+        return myProduct;
+    }
+};
+	
 	@GetMapping("/search")
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
-		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
-		product1.price = 9.99;
-		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
-		TchiboProduct product2 = new TchiboProduct("Leo Lausemaus");
-		product2.price = 10.99;
-		product2.searchTags = asList(new TopTag("8er", 3), new TopTag("foo", 44), new TopTag("bar", 23));
-		return asList(product1, product2);
+		List<TchiboProduct> thiboProducts = productRepository.findByCustomQuery(searchText).stream().map(productToTchiboProduct)
+                .collect(Collectors.toList());
+		//product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
+		return thiboProducts;
 	}
 
 	@GetMapping("/tagclicked")
