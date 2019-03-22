@@ -21,10 +21,15 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" class="svgWithFallback js-tp-imagelazy--loaded" data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png" alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" data-lazyload="true">
+        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             class="svgWithFallback js-tp-imagelazy--loaded"
+             data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png"
+             alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             data-lazyload="true">
         <a class="navbar-brand" href="#">Second Bean</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -58,7 +63,8 @@
                 </div>
                 <!--end of col-->
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords" id="searchText">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                           placeholder="Search topics or keywords" id="searchText">
                 </div>
                 <!--end of col-->
                 <div class="col-auto">
@@ -139,8 +145,7 @@
     }
 
     axios.get('/api/toptags', {
-             params: {
-             }
+             params: {}
          })
          .then(function(response) {
              const topTags = response.data;
@@ -151,25 +156,24 @@
          });
 
     axios.get('/api/toplist', {
-                 params: {
-                 }
-             })
-             .then(function(response) {
-                 console.log(response.data);
+             params: {}
+         })
+         .then(function(response) {
+             console.log(response.data);
 
-                 response.data.forEach((product) => {
-                     const li = document.createElement("li");
-                     const img = document.createElement('img');
-                     img.setAttribute('class', 'img-fluid img-thumbnail');
-                     img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
-                     li.appendChild(img);
-                     li.append(product.name + ' - ' + product.price + '€');
-                     $('#toplist').append(li);
-                 });
-             })
-             .catch(function(error) {
-                 console.log(error);
+             response.data.forEach((product) => {
+                 const li = document.createElement("li");
+                 const img = document.createElement('img');
+                 img.setAttribute('class', 'img-fluid img-thumbnail');
+                 img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
+                 li.appendChild(img);
+                 li.append(product.name + ' - ' + product.price + '€');
+                 $('#toplist').append(li);
              });
+         })
+         .catch(function(error) {
+             console.log(error);
+         });
 
     $('#searchButton').on('click', function(e) {
         e.preventDefault();
@@ -180,7 +184,7 @@
              })
              .then(function(response) {
                  const products = response.data,
-                    tags = [];
+                     tags = [];
 
                  products.forEach((product) => {
                      product.searchTags.forEach((tag) => {
