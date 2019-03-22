@@ -30,20 +30,23 @@ public class SecondBeanRestController {
 	@GetMapping("/profile")
 	@ResponseBody
 	public TchiboProfile profile() {
+		Product product = productRepository.findById("400074462").get();
+		Product product2 = productRepository.findById("400078565").get();
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
 		TchiboProfile lisa = new TchiboProfile("lisa");
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
-		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
-		theoTiger.pid = "4711";
+		TchiboProduct theoTiger = new TchiboProduct(product.getName());
+		theoTiger.pid = product.getId();
 		theoTiger.price = 99.78;
-		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		theoTiger.imageUrl = product.getImageUrl();
 		Transaction boughtProduct = new Transaction(new Date(), lisa, theoTiger);
 		tchiboProfile.addBoughtProduct(boughtProduct);
-		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
+		TchiboProduct megaMinion = new TchiboProduct(product2.getName());
 		megaMinion.price = 1000.0;
-		megaMinion.pid = "4712";
+		megaMinion.pid = product2.getId();
+		megaMinion.imageUrl = product2.getImageUrl();
 		Transaction sellingProduct = new Transaction(new Date(), bob, megaMinion);
 		tchiboProfile.addSellingProduct(sellingProduct);
 
@@ -58,7 +61,8 @@ public class SecondBeanRestController {
 
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
-		Product product = productRepository.findById(pid).get();
+		Product product = productRepository.findById("400074462").get();
+		Product product2 = productRepository.findById("400078565").get();
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
 		TchiboProfile lisa = new TchiboProfile("lisa");
@@ -67,7 +71,8 @@ public class SecondBeanRestController {
 		TchiboProduct theoTiger = productToTchiboProduct.apply(product);
 		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
 		megaMinion.price = 1000.0;
-		megaMinion.pid = "4712";
+		megaMinion.pid = product2.getId();
+		megaMinion.imageUrl = product2.getImageUrl();
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, megaMinion));
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, theoTiger));
 
@@ -85,7 +90,7 @@ public class SecondBeanRestController {
         return myProduct;
     }
 };
-	
+
 	@GetMapping("/search")
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
 		List<TchiboProduct> thiboProducts = productRepository.findByCustomQuery(searchText).stream().map(productToTchiboProduct)
@@ -124,13 +129,11 @@ public class SecondBeanRestController {
 		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
 		product1.price = 9.90;
-		product1.imageId = "demo_image";
-		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+//		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
 		product2.name = "p2";
 		product2.price = 4.99;
-		product2.imageId = "demo_image2";
-		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
+//		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
 		return asList(product1, product2);
 	}
 
@@ -174,9 +177,8 @@ class TchiboProduct {
 	String pid;
 	String name;
 	Double price;
-	String imageId;
 	String imageUrl;
-	List<TopTag> searchTags;
+	List<TopTag> searchTags = new ArrayList<>();
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -196,10 +198,6 @@ class TchiboProduct {
 
 	public String getName() {
 		return name;
-	}
-
-	public String getImageId() {
-		return imageId;
 	}
 
 	public String getImageUrl() {
