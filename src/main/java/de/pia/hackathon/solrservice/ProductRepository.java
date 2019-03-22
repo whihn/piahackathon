@@ -22,6 +22,9 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 	@Query(value="id:*?0* OR TITLE:*?0*" ,filters = {"!VISIBILITY:\"ARCHIVE\" AND !VISIBILITY:\"NONE\""})
 	public List<Product> findByCustomQuery(String searchTerm);
 
+	@Query(value="id:*?0* OR COLOR:*?0* OR ASSORTMENT_CATEGORY1:*?0* OR ASSORTMENT_CATEGORY2:*?0* OR ASSORTMENT_CATEGORY3:*?0*" ,filters = {"!VISIBILITY:\"ARCHIVE\" AND !VISIBILITY:\"NONE\""})
+	public List<Product> findByTag(String searchTerm);
+
 	@SolrDocument(collection = "tchibo")
 	public class Product {
 		public String getId() {

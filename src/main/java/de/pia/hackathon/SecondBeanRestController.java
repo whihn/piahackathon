@@ -93,20 +93,18 @@ public class SecondBeanRestController {
 
 	@GetMapping("/search")
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
-		List<TchiboProduct> thiboProducts = productRepository.findByCustomQuery(searchText)
+		return productRepository.findByCustomQuery(searchText)
 				.stream()
 				.map(productToTchiboProduct)
 				.collect(Collectors.toList());
-		//product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
-		return thiboProducts;
 	}
 
 	@GetMapping("/tagclicked")
 	public List<TchiboProduct> tagClicked(@RequestParam String tagText) {
-		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
-		product1.price = "9.99";
-		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
-		return asList(product1);
+		return productRepository.findByTag(tagText)
+				.stream()
+				.map(productToTchiboProduct)
+				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/toptags")
