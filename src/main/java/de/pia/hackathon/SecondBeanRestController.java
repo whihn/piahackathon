@@ -1,7 +1,10 @@
 package de.pia.hackathon;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +31,14 @@ public class SecondBeanRestController {
 
     @GetMapping("/image")
     public byte[] getImage(@RequestParam String imageId) {
-
-        return new byte[0];
+        try {
+            ClassPathResource ressource = new ClassPathResource("images/demo_image.jpg",
+                    this.getClass().getClassLoader());
+            return IOUtils.toByteArray(ressource.getInputStream());
+        }
+        catch (IOException e) {
+            return new byte[0];
+        }
     }
 
     @GetMapping("/toplist")
