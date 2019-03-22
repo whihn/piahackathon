@@ -59,7 +59,7 @@ public class SecondBeanRestController {
 		if ("676699932".equals(pid)) {
 			product = new Product();
 			product.setId(pid);
-			product.setName("Dino");
+			product.setName("Danny Dino");
 			product.setPrice("99,99");
 		}
 		else {
