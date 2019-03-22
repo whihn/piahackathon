@@ -32,7 +32,8 @@ public class SecondBeanRestController {
     @GetMapping("/image")
     public byte[] getImage(@RequestParam String imageId) {
         try {
-            ClassPathResource ressource = new ClassPathResource("images/demo_image.jpg",
+            String path = String.format("images/%s.jpg", imageId);
+            ClassPathResource ressource = new ClassPathResource(path,
                     this.getClass().getClassLoader());
             return IOUtils.toByteArray(ressource.getInputStream());
         }
@@ -46,9 +47,11 @@ public class SecondBeanRestController {
         TchiboProduct product1 = new TchiboProduct();
         product1.name = "p1";
         product1.price = 9.90;
+        product1.imageId = "demo_image";
         TchiboProduct product2 = new TchiboProduct();
         product2.name = "p2";
         product2.price = 4.99;
+        product2.imageId = "demo_image2";
         return asList(product1, product2);
     }
 
@@ -68,6 +71,7 @@ public class SecondBeanRestController {
 class TchiboProduct {
     String name;
     Double price;
+    String imageId;
 
     public Double getPrice() {
         return price;
@@ -75,6 +79,10 @@ class TchiboProduct {
 
     public String getName() {
         return name;
+    }
+
+    public String getImageId() {
+        return imageId;
     }
 }
 
