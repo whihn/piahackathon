@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <title>Search</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
     Searchfield goes here...
+
+    <div class="tagcloud03">
+        <ul id="toptags">
+            <!--<li><a href="#">tag<span>20</span></a></li>-->
+        </ul>
+    </div>
 <script>
     axios.get('/api/toptags', {
              params: {
@@ -16,7 +24,17 @@
          .then(function(response) {
              const topTags = response.data;
 
-             console.log(topTags);
+             topTags.forEach((tag) => {
+                 const li = document.createElement("li");
+                 const a = document.createElement('a');
+                 a.setAttribute('href', '#');
+                 a.append(tag.tag);
+                 const span = document.createElement('span');
+                 span.append(tag.count);
+                 a.appendChild(span);
+                 li.appendChild(a);
+                 $('#toptags').append(li);
+             });
          })
          .catch(function(error) {
              console.log(error);
