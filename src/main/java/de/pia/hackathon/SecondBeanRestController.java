@@ -46,10 +46,10 @@ public class SecondBeanRestController {
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
 		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
 		product1.price = 9.99;
-		product1.searchTags = asList("4er", "gepolstert", "pink");
+		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
 		TchiboProduct product2 = new TchiboProduct("Leo Lausemaus");
 		product2.price = 10.99;
-		product2.searchTags = asList("8er", "foo", "bar");
+		product2.searchTags = asList(new TopTag("8er", 3), new TopTag("foo", 44), new TopTag("bar", 23));
 		return asList(product1, product2);
 	}
 
@@ -97,25 +97,26 @@ public class SecondBeanRestController {
 		return new ArrayList<>();
 	}
 
-	private class TopTag {
+}
 
-		private String tag;
-		private int count;
+class TopTag {
 
-		public TopTag() {}
+	private String tag;
+	private int count;
 
-		public TopTag(String tag, int count) {
-			this.tag = tag;
-			this.count = count;
-		}
+	public TopTag() {}
 
-		public int getCount() {
-			return count;
-		}
+	public TopTag(String tag, int count) {
+		this.tag = tag;
+		this.count = count;
+	}
 
-		public String getTag() {
-			return tag;
-		}
+	public int getCount() {
+		return count;
+	}
+
+	public String getTag() {
+		return tag;
 	}
 }
 
@@ -125,7 +126,7 @@ class TchiboProduct {
 	Double price;
 	String imageId;
 	String imageUrl;
-	List<String> searchTags;
+	List<TopTag> searchTags;
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -135,7 +136,7 @@ class TchiboProduct {
 		return price;
 	}
 
-	public List<String> getSearchTags() {
+	public List<TopTag> getSearchTags() {
 		return searchTags;
 	}
 

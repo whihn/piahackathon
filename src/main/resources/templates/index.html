@@ -119,24 +119,29 @@
             '                </tr>\n';
     }
 
+    function renderTags(tags) {
+        $('#toptags').empty();
+
+        tags.forEach((tag) => {
+            const li = document.createElement("li");
+            const a = document.createElement('a');
+            a.setAttribute('href', '#');
+            a.append(tag.tag);
+            const span = document.createElement('span');
+            span.append(tag.count);
+            a.appendChild(span);
+            li.appendChild(a);
+            $('#toptags').append(li);
+        });
+    }
+
     axios.get('/api/toptags', {
              params: {
              }
          })
          .then(function(response) {
              const topTags = response.data;
-
-             topTags.forEach((tag) => {
-                 const li = document.createElement("li");
-                 const a = document.createElement('a');
-                 a.setAttribute('href', '#');
-                 a.append(tag.tag);
-                 const span = document.createElement('span');
-                 span.append(tag.count);
-                 a.appendChild(span);
-                 li.appendChild(a);
-                 $('#toptags').append(li);
-             });
+             renderTags(topTags);
          })
          .catch(function(error) {
              console.log(error);
@@ -163,7 +168,6 @@
                  console.log(error);
              });
 
-
     $('#searchButton').on('click', function(e) {
         e.preventDefault();
         axios.get('/api/search', {
@@ -172,11 +176,16 @@
                  }
              })
              .then(function(response) {
-                 const products = response.data;
+                 const products = response.data,
+                    tags = [];
 
                  products.forEach((product) => {
+                     product.searchTags.forEach((tag) => {
+                         tags.push(tag);
+                     });
                      $('#resultList').append(productRow(product));
                  });
+                 renderTags(tags);
              })
              .catch(function(error) {
                  console.log(error);
