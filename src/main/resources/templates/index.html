@@ -81,7 +81,7 @@
 <div class="row justify-content-center">
     <div class="tagcloud03">
         <ul id="toptags">
-            <!--<li><a href="#">tag<span>20</span></a></li>-->
+            <!--<li><a href="#">name<span>20</span></a></li>-->
         </ul>
     </div>
 </div>
@@ -194,13 +194,13 @@
     function renderTags(tags) {
         $('#toptags').empty();
 
-        tags.forEach((tag) => {
+        tags.forEach((name) => {
             const li = document.createElement("li");
             const a = document.createElement('a');
-            a.setAttribute('onclick', 'onTagClicked(\'' + tag.tag + '\')');
-            a.append(tag.tag);
+            a.setAttribute('onclick', 'onTagClicked(\'' + name.name + '\')');
+            a.append(name.name);
             const span = document.createElement('span');
-            span.append(tag.count);
+            span.append(name.count);
             a.appendChild(span);
             li.appendChild(a);
             $('#toptags').append(li);
@@ -215,18 +215,18 @@
         $('#cardContainer').empty();
 
         products.forEach((product) => {
-            product.searchTags.forEach((tag) => {
-                tags.push(tag);
+            product.searchProductTags.forEach((name) => {
+                tags.push(name);
             });
             $('#cardContainer').append(productCard(product));
         });
         renderTags(tags);
     }
 
-    function onTagClicked(tag) {
+    function onTagClicked(name) {
         axios.get('/api/tagclicked', {
                  params: {
-                     tagText: tag
+                     tagText: name
                  }
              })
              .then(onSearchResponse);

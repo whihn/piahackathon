@@ -84,10 +84,10 @@ public class SecondBeanRestController {
 		myProduct.pid = t.getId();
 		myProduct.price = t.getPrice();
 		myProduct.imageUrl = t.getImageUrl();
-		myProduct.searchTags.add(new TopTag(t.getColor(), 10));
-		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory1(), 11));
-		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory2(), 12));
-		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory3(), 13));
+		myProduct.searchProductTags.add(new ProductTag(t.getColor(), 10));
+		myProduct.searchProductTags.add(new ProductTag(t.getAssortmentCategory1(), 11));
+		myProduct.searchProductTags.add(new ProductTag(t.getAssortmentCategory2(), 12));
+		myProduct.searchProductTags.add(new ProductTag(t.getAssortmentCategory3(), 13));
 		return myProduct;
 	};
 
@@ -108,8 +108,8 @@ public class SecondBeanRestController {
 	}
 
 	@GetMapping("/toptags")
-	public List<TopTag> topTags() {
-		return asList(new TopTag("top1", 10), new TopTag("top2", 5), new TopTag("top3", 13));
+	public List<ProductTag> topTags() {
+		return asList(new ProductTag("top1", 10), new ProductTag("top2", 5), new ProductTag("top3", 13));
 	}
 
 	@GetMapping("/image")
@@ -149,16 +149,16 @@ public class SecondBeanRestController {
 
 }
 
-class TopTag {
+class ProductTag {
 
-	private String tag;
+	private String name;
 	private int count;
 
-	public TopTag() {
+	public ProductTag() {
 	}
 
-	public TopTag(String tag, int count) {
-		this.tag = tag;
+	public ProductTag(String name, int count) {
+		this.name = name;
 		this.count = count;
 	}
 
@@ -166,8 +166,8 @@ class TopTag {
 		return count;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getName() {
+		return name;
 	}
 }
 
@@ -177,7 +177,7 @@ class TchiboProduct {
 	String name;
 	String price;
 	String imageUrl;
-	List<TopTag> searchTags = new ArrayList<>();
+	List<ProductTag> searchProductTags = new ArrayList<>();
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -191,8 +191,8 @@ class TchiboProduct {
 		return price;
 	}
 
-	public List<TopTag> getSearchTags() {
-		return searchTags;
+	public List<ProductTag> getSearchProductTags() {
+		return searchProductTags;
 	}
 
 	public String getName() {
