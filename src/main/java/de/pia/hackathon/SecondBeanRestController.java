@@ -61,6 +61,7 @@ public class SecondBeanRestController {
 			product.setId(pid);
 			product.setName("Danny Dino");
 			product.setPrice("99,99");
+			product.setImageUrl("http://localhost:8080/images/professionalPhotoFromTchibo.jpg");
 		}
 		else {
 			product = productRepository.findById(pid).get();
