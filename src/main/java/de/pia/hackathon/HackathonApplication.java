@@ -28,10 +28,6 @@ public class HackathonApplication {
         return "search";
     }
 
-    @GetMapping("/shop")
-    public String indexShop() {
-        return "indexShop";
-    }
     @GetMapping("/cart")
     public String shoppingCart() {
         return "shoppingCart";
