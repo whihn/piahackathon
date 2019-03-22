@@ -25,10 +25,15 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" class="svgWithFallback js-tp-imagelazy--loaded" data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png" alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" data-lazyload="true">
+        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             class="svgWithFallback js-tp-imagelazy--loaded"
+             data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png"
+             alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             data-lazyload="true">
         <a class="navbar-brand" href="#">Second Bean</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -39,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
+                    <a class="nav-link" href="cart">Account</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -52,7 +57,7 @@
     </div>
 </nav>
 
-
+<p/>
 <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
         <form class="card card-sm">
@@ -62,7 +67,8 @@
                 </div>
                 <!--end of col-->
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords" id="searchText">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                           placeholder="Search topics or keywords" id="searchText">
                 </div>
                 <!--end of col-->
                 <div class="col-auto">
@@ -74,10 +80,12 @@
     </div>
     <!--end of col-->
 </div>
-<div class="tagcloud03">
-    <ul id="toptags">
-        <!--<li><a href="#">tag<span>20</span></a></li>-->
-    </ul>
+<div class="row justify-content-center">
+    <div class="tagcloud03">
+        <ul id="toptags">
+            <!--<li><a href="#">tag<span>20</span></a></li>-->
+        </ul>
+    </div>
 </div>
 
 <!--<div class="product-card-square mdl-card mdl-shadow&#45;&#45;2dp">
@@ -149,25 +157,26 @@
 
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h2>Search Results</h2>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Product</th>
-                    <th class="text-center">Price</th>
-                    <th> </th>
-                </tr>
-                </thead>
-                <tbody id="resultList">
-                </tbody>
-            </table>
+<div class="row justify-content-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <h2>Search Results</h2>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-center">Price</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody id="resultList">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 <script>
     function productRow(product) {
@@ -194,63 +203,67 @@
 
     function productCard(product) {
         return ' <div class="mdl-card mdl-shadow--2dp">\n' +
-               '   <figure class="mdl-card__media">\n' +
-               '      <img src="' + product.image +'" alt="" />\n' +
-               '   </figure>\n'+
-               '   <div class="mdl-card__title mdl-card--expand">\n' +
-               '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
-               '   </div>' +
-               '  <div class="mdl-card__actions mdl-card--border">\n' +
-               '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>\n' +
-               '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>\n' +
-               '  </div>\n' +
-               ' </div>';
+            '   <figure class="mdl-card__media">\n' +
+            '      <img src="' + product.image +'" alt="" />\n' +
+            '   </figure>\n'+
+            '   <div class="mdl-card__title mdl-card--expand">\n' +
+            '      <p class="mdl-card__title-text">' + product.name + '</p>\n' +
+            '   </div>' +
+            '  <div class="mdl-card__actions mdl-card--border">\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>\n' +
+            '    <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>\n' +
+            '  </div>\n' +
+            ' </div>';
+    }
+
+    function renderTags(tags) {
+        $('#toptags').empty();
+
+        tags.forEach((tag) => {
+            const li = document.createElement("li");
+            const a = document.createElement('a');
+            a.setAttribute('onclick', 'onTagClicked(\'' + tag.tag + '\')');
+            a.append(tag.tag);
+            const span = document.createElement('span');
+            span.append(tag.count);
+            a.appendChild(span);
+            li.appendChild(a);
+            $('#toptags').append(li);
+        });
+    }
+
+    function onSearchResponse(response) {
+        const products = response.data,
+            tags = [];
+
+        $('#resultList').empty();
+
+        products.forEach((product) => {
+            product.searchTags.forEach((tag) => {
+                tags.push(tag);
+            });
+            $('#resultList').append(productCard(product));
+        });
+        renderTags(tags);
+    }
+
+    function onTagClicked(tag) {
+        axios.get('/api/tagclicked', {
+                 params: {
+                     tagText: tag
+                 }
+             })
+             .then(onSearchResponse);
+
     }
 
     axios.get('/api/toptags', {
-             params: {
-             }
+             params: {}
          })
-         .then(function(response) {
+         .then(response => {
              const topTags = response.data;
-
-             topTags.forEach((tag) => {
-                 const li = document.createElement("li");
-                 const a = document.createElement('a');
-                 a.setAttribute('href', '#');
-                 a.append(tag.tag);
-                 const span = document.createElement('span');
-                 span.append(tag.count);
-                 a.appendChild(span);
-                 li.appendChild(a);
-                 $('#toptags').append(li);
-             });
-         })
-         .catch(function(error) {
-             console.log(error);
+             renderTags(topTags);
          });
-
-    axios.get('/api/toplist', {
-                 params: {
-                 }
-             })
-             .then(function(response) {
-                 console.log(response.data);
-
-                 response.data.forEach((product) => {
-                     const li = document.createElement("li");
-                     const img = document.createElement('img');
-                     img.setAttribute('class', 'img-fluid img-thumbnail');
-                     img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
-                     li.appendChild(img);
-                     li.append(product.name + ' - ' + product.price + '€');
-                     $('#toplist').append(li);
-                 });
-             })
-             .catch(function(error) {
-                 console.log(error);
-             });
-
 
     $('#searchButton').on('click', function(e) {
         e.preventDefault();
@@ -259,18 +272,7 @@
                      searchText: $('#searchText').val()
                  }
              })
-             .then(function(response) {
-                 const products = response.data;
-                 $('#cardContainer').empty();
-
-                 products.forEach((product) => {
-                     //$('#resultList').append(productRow(product));
-                     $('#cardContainer').append(productCard(product));
-                 });
-             })
-             .catch(function(error) {
-                 console.log(error);
-             });
+             .then(onSearchResponse);
     })
 
 

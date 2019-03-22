@@ -24,12 +24,14 @@ public class SecondBeanRestController {
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
 		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
+		theoTiger.pid = "4711";
 		theoTiger.price = 99.78;
 		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		Transaction boughtProduct = new Transaction(new Date(), lisa, theoTiger);
 		tchiboProfile.addBoughtProduct(boughtProduct);
 		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
 		megaMinion.price = 1000.0;
+		megaMinion.pid = "4712";
 		Transaction sellingProduct = new Transaction(new Date(), bob, megaMinion);
 		tchiboProfile.addSellingProduct(sellingProduct);
 
@@ -42,15 +44,43 @@ public class SecondBeanRestController {
 		return new TchiboProduct("Theo Tiger");
 	}
 
+	@GetMapping("/offerproduct")
+	public TchiboProfile offerProduct(@RequestParam String pid) {
+		TchiboProfile tchiboProfile = new TchiboProfile();
+		TchiboProfile bob = new TchiboProfile("bob");
+		TchiboProfile lisa = new TchiboProfile("lisa");
+		tchiboProfile.addFriend(bob);
+		tchiboProfile.addFriend(lisa);
+		TchiboProduct theoTiger = new TchiboProduct("Theo Tiger");
+		theoTiger.pid = "4711";
+		theoTiger.price = 99.78;
+		theoTiger.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
+		megaMinion.price = 1000.0;
+		megaMinion.pid = "4712";
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, megaMinion));
+		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, theoTiger));
+
+		return tchiboProfile;
+	}
+
 	@GetMapping("/search")
 	public List<TchiboProduct> searchProducts(@RequestParam String searchText) {
 		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
 		product1.price = 9.99;
-		product1.searchTags = asList("4er", "gepolstert", "pink");
+		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
 		TchiboProduct product2 = new TchiboProduct("Leo Lausemaus");
 		product2.price = 10.99;
-		product2.searchTags = asList("8er", "foo", "bar");
+		product2.searchTags = asList(new TopTag("8er", 3), new TopTag("foo", 44), new TopTag("bar", 23));
 		return asList(product1, product2);
+	}
+
+	@GetMapping("/tagclicked")
+	public List<TchiboProduct> tagClicked(@RequestParam String tagText) {
+		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
+		product1.price = 9.99;
+		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
+		return asList(product1);
 	}
 
 	@GetMapping("/toptags")
@@ -97,45 +127,51 @@ public class SecondBeanRestController {
 		return new ArrayList<>();
 	}
 
-	private class TopTag {
+}
 
-		private String tag;
-		private int count;
+class TopTag {
 
-		public TopTag() {}
+	private String tag;
+	private int count;
 
-		public TopTag(String tag, int count) {
-			this.tag = tag;
-			this.count = count;
-		}
+	public TopTag() {}
 
-		public int getCount() {
-			return count;
-		}
+	public TopTag(String tag, int count) {
+		this.tag = tag;
+		this.count = count;
+	}
 
-		public String getTag() {
-			return tag;
-		}
+	public int getCount() {
+		return count;
+	}
+
+	public String getTag() {
+		return tag;
 	}
 }
 
 class TchiboProduct {
 
+	String pid;
 	String name;
 	Double price;
 	String imageId;
 	String imageUrl;
-	List<String> searchTags;
+	List<TopTag> searchTags;
 
 	public TchiboProduct(String name) {
 		this.name = name;
+	}
+
+	public String getPid() {
+		return pid;
 	}
 
 	public Double getPrice() {
 		return price;
 	}
 
-	public List<String> getSearchTags() {
+	public List<TopTag> getSearchTags() {
 		return searchTags;
 	}
 
