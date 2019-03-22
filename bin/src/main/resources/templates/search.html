@@ -13,7 +13,6 @@
 
     <div class="tagcloud03">
         <ul id="toptags">
-            <!--<li><a href="#">tag<span>20</span></a></li>-->
         </ul>
     </div>
 <script>
@@ -28,7 +27,7 @@
                  const li = document.createElement("li");
                  const a = document.createElement('a');
                  a.setAttribute('href', '#');
-                 a.append(tag.tag);
+                 a.append(tag.name);
                  const span = document.createElement('span');
                  span.append(tag.count);
                  a.appendChild(span);
