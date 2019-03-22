@@ -38,6 +38,11 @@ public class HackathonApplication {
         return "sellProduct";
     }
 
+    @GetMapping("/detail")
+    public String detail() {
+        return "productDetail";
+    }
+
 }
 
 

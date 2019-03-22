@@ -159,13 +159,7 @@
     function confirmSell() {
  debugger;
 
-        axios.put('/api/offerproduct', {
-            params: {
-                product: {
-                    pid: '676699932'
-                }
-            }
-        })
+        axios.get('/api/offerproduct?pid=676699932')
             .then(() => {
                 alert('Product sold. Other people will see your product now');
                 window.location.href="/";
