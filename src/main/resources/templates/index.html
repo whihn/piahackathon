@@ -21,10 +21,15 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" class="svgWithFallback js-tp-imagelazy--loaded" data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png" alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg" data-lazyload="true">
+        <img src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             class="svgWithFallback js-tp-imagelazy--loaded"
+             data-media-svg-fallback="https://media1.tchibo-content.de/newmedia/page/img/b0f725cc6ea32e93/bean.png"
+             alt="" data-src="https://media1.tchibo-content.de/newmedia/page/img/b14725cc6ea32e93/bean.svg"
+             data-lazyload="true">
         <a class="navbar-brand" href="#">Second Bean</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -58,7 +63,8 @@
                 </div>
                 <!--end of col-->
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords" id="searchText">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                           placeholder="Search topics or keywords" id="searchText">
                 </div>
                 <!--end of col-->
                 <div class="col-auto">
@@ -70,31 +76,34 @@
     </div>
     <!--end of col-->
 </div>
-<div class="tagcloud03">
-    <ul id="toptags">
-        <!--<li><a href="#">tag<span>20</span></a></li>-->
-    </ul>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <h2>Search Results</h2>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Product</th>
-                    <th class="text-center">Price</th>
-                    <th> </th>
-                </tr>
-                </thead>
-                <tbody id="resultList">
-                </tbody>
-            </table>
-        </div>
+<div class="row justify-content-center">
+    <div class="tagcloud03">
+        <ul id="toptags">
+            <!--<li><a href="#">tag<span>20</span></a></li>-->
+        </ul>
     </div>
 </div>
 
+<div class="row justify-content-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <h2>Search Results</h2>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-center">Price</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody id="resultList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     function productRow(product) {
@@ -119,50 +128,54 @@
             '                </tr>\n';
     }
 
-    axios.get('/api/toptags', {
-             params: {
-             }
-         })
-         .then(function(response) {
-             const topTags = response.data;
+    function renderTags(tags) {
+        $('#toptags').empty();
 
-             topTags.forEach((tag) => {
-                 const li = document.createElement("li");
-                 const a = document.createElement('a');
-                 a.setAttribute('href', '#');
-                 a.append(tag.tag);
-                 const span = document.createElement('span');
-                 span.append(tag.count);
-                 a.appendChild(span);
-                 li.appendChild(a);
-                 $('#toptags').append(li);
-             });
-         })
-         .catch(function(error) {
-             console.log(error);
-         });
+        tags.forEach((tag) => {
+            const li = document.createElement("li");
+            const a = document.createElement('a');
+            a.setAttribute('onclick', 'onTagClicked(\'' + tag.tag + '\')');
+            a.append(tag.tag);
+            const span = document.createElement('span');
+            span.append(tag.count);
+            a.appendChild(span);
+            li.appendChild(a);
+            $('#toptags').append(li);
+        });
+    }
 
-    axios.get('/api/toplist', {
+    function onSearchResponse(response) {
+        const products = response.data,
+            tags = [];
+
+        $('#resultList').empty();
+
+        products.forEach((product) => {
+            product.searchTags.forEach((tag) => {
+                tags.push(tag);
+            });
+            $('#resultList').append(productRow(product));
+        });
+        renderTags(tags);
+    }
+
+    function onTagClicked(tag) {
+        axios.get('/api/tagclicked', {
                  params: {
+                     tagText: tag
                  }
              })
-             .then(function(response) {
-                 console.log(response.data);
+             .then(onSearchResponse);
 
-                 response.data.forEach((product) => {
-                     const li = document.createElement("li");
-                     const img = document.createElement('img');
-                     img.setAttribute('class', 'img-fluid img-thumbnail');
-                     img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
-                     li.appendChild(img);
-                     li.append(product.name + ' - ' + product.price + '€');
-                     $('#toplist').append(li);
-                 });
-             })
-             .catch(function(error) {
-                 console.log(error);
-             });
+    }
 
+    axios.get('/api/toptags', {
+             params: {}
+         })
+         .then(response => {
+             const topTags = response.data;
+             renderTags(topTags);
+         });
 
     $('#searchButton').on('click', function(e) {
         e.preventDefault();
@@ -171,16 +184,7 @@
                      searchText: $('#searchText').val()
                  }
              })
-             .then(function(response) {
-                 const products = response.data;
-
-                 products.forEach((product) => {
-                     $('#resultList').append(productRow(product));
-                 });
-             })
-             .catch(function(error) {
-                 console.log(error);
-             });
+             .then(onSearchResponse);
     })
 
 
