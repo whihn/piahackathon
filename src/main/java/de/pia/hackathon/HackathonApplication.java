@@ -20,8 +20,12 @@ public class HackathonApplication {
 
     @GetMapping("/login")
     public String login() {
-
         return "login";
+    }
+
+    @GetMapping("/search")
+    public String search() {
+        return "search";
     }
 
     @GetMapping("/shop")
