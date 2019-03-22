@@ -39,12 +39,12 @@ public class SecondBeanRestController {
 		tchiboProfile.addFriend(lisa);
 		TchiboProduct theoTiger = new TchiboProduct(product.getName());
 		theoTiger.pid = product.getId();
-		theoTiger.price = 99.78;
+		theoTiger.price = "99.78";
 		theoTiger.imageUrl = product.getImageUrl();
 		Transaction boughtProduct = new Transaction(new Date(), lisa, theoTiger);
 		tchiboProfile.addBoughtProduct(boughtProduct);
 		TchiboProduct megaMinion = new TchiboProduct(product2.getName());
-		megaMinion.price = 1000.0;
+		megaMinion.price = "1000.0";
 		megaMinion.pid = product2.getId();
 		megaMinion.imageUrl = product2.getImageUrl();
 		Transaction sellingProduct = new Transaction(new Date(), bob, megaMinion);
@@ -70,7 +70,7 @@ public class SecondBeanRestController {
 		tchiboProfile.addFriend(lisa);
 		TchiboProduct theoTiger = productToTchiboProduct.apply(product);
 		TchiboProduct megaMinion = new TchiboProduct("Mega Minion");
-		megaMinion.price = 1000.0;
+		megaMinion.price = "1000.0";
 		megaMinion.pid = product2.getId();
 		megaMinion.imageUrl = product2.getImageUrl();
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, megaMinion));
@@ -82,7 +82,7 @@ public class SecondBeanRestController {
 	Function<Product, TchiboProduct> productToTchiboProduct = t -> {
 		TchiboProduct myProduct = new TchiboProduct(t.getName());
 		myProduct.pid = t.getId();
-		myProduct.price = Double.parseDouble(t.getPrice().replace(",", "."));
+		myProduct.price = t.getPrice();
 		myProduct.imageUrl = t.getImageUrl();
 		myProduct.searchTags.add(new TopTag(t.getColor(), 10));
 		myProduct.searchTags.add(new TopTag(t.getAssortmentCategory1(), 11));
@@ -104,7 +104,7 @@ public class SecondBeanRestController {
 	@GetMapping("/tagclicked")
 	public List<TchiboProduct> tagClicked(@RequestParam String tagText) {
 		TchiboProduct product1 = new TchiboProduct("Theo Tiger");
-		product1.price = 9.99;
+		product1.price = "9.99";
 		product1.searchTags = asList(new TopTag("4er", 19), new TopTag("gepolstert", 77), new TopTag("pink", 3));
 		return asList(product1);
 	}
@@ -130,12 +130,10 @@ public class SecondBeanRestController {
 	public List<TchiboProduct> topList() {
 		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
-		product1.price = 9.90;
-		//		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
+		product1.price = "9.90";
 		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
 		product2.name = "p2";
-		product2.price = 4.99;
-		//		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
+		product2.price = "4.99";
 		return asList(product1, product2);
 	}
 
@@ -179,7 +177,7 @@ class TchiboProduct {
 
 	String pid;
 	String name;
-	Double price;
+	String price;
 	String imageUrl;
 	List<TopTag> searchTags = new ArrayList<>();
 
@@ -191,7 +189,7 @@ class TchiboProduct {
 		return pid;
 	}
 
-	public Double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
