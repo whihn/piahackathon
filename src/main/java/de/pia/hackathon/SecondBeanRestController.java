@@ -55,7 +55,16 @@ public class SecondBeanRestController {
 
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
-		Product product = productRepository.findById("400074462").get();
+		Product product;
+		if ("676699932".equals(pid)) {
+			product = new Product();
+			product.setId(pid);
+			product.setName("Dino");
+			product.setPrice("99,99");
+		}
+		else {
+			product = productRepository.findById(pid).get();
+		}
 		Product product2 = productRepository.findById("400078565").get();
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
