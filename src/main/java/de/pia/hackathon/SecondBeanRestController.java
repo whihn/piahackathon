@@ -47,10 +47,12 @@ public class SecondBeanRestController {
 		product1.name = "p1";
 		product1.price = 9.90;
 		product1.imageId = "demo_image";
+		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		TchiboProduct product2 = new TchiboProduct();
 		product2.name = "p2";
 		product2.price = 4.99;
 		product2.imageId = "demo_image2";
+		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
 		return asList(product1, product2);
 	}
 
@@ -73,6 +75,7 @@ class TchiboProduct {
 	String name;
 	Double price;
 	String imageId;
+	String imageUrl;
 
 	public Double getPrice() {
 		return price;
@@ -84,6 +87,10 @@ class TchiboProduct {
 
 	public String getImageId() {
 		return imageId;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 }
 
