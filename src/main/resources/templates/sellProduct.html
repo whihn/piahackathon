@@ -13,11 +13,10 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 <body>
@@ -67,7 +66,7 @@
 
     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">Product details</h2>
+            <h2 class="mdl-card__title-text">Sell your product</h2>
         </div>
         <div class="mdl-card__supporting-text">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -79,11 +78,33 @@
                 <label class="mdl-textfield__label" for="details">Description</label>
             </div>
 
-            <div id="photo">
-            </div>
+            <label for="condition">Condition:</label>
+            <select class="form-control" id="condition">
+                <option>NEW</option>
+                <option>AS NEW</option>
+                <option>USED</option>
+                <option>OKAY</option>
+                <option>I'M SORRY</option>
+            </select>
+
+            <label for="age">Date of purchase:</label>
+            <select class="form-control" id="age">
+                <option>LESS THEN 1 MONTH</option>
+                <option>1-6 MONTHS</option>
+                <option>6-12 MONTHS</option>
+                <option>1-3 YEARS</option>
+                <option>3-5 YEARS</option>
+                <option>5 YEARS ++</option>
+            </select>
+        </div>
+        <div id="photo">
         </div>
     </div>
 </div>
+
+<button style="position: fixed; bottom: 6px; right: 6px; z-index: 9999" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+    <a onclick="confirmSell()" style="color: white"><i class="material-icons">check</i></a>
+</button>
 
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -100,7 +121,6 @@
                     <p>Awesome Pattern recognition is working hard for you!</p>
                     <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,7 +132,9 @@
 </div>
 
 </body>
+
 <script>
+
     function photoTaken() {
 
         $('#progressBar').show();
@@ -131,6 +153,23 @@
             '\U+00D8 mounting opening approx 2cm, strap length approx 35.5cm').parent().addClass('is-dirty');
             $('#photo').append(' <img src="/images/professionalPhotoFromTchibo.jpg" width="330" height="330">\n');
         }, 2000);
+
+    }
+
+    function confirmSell() {
+ debugger;
+
+        axios.put('/api/offerproduct', {
+            params: {
+                product: {
+                    pid: '676699932'
+                }
+            }
+        })
+            .then(() => {
+                alert('Product sold. Other people will see your product now');
+                window.location.href="/";
+            });
 
     }
 
