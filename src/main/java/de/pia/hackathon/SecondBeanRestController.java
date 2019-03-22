@@ -129,12 +129,10 @@ public class SecondBeanRestController {
 		TchiboProduct product1 = new TchiboProduct("Mega Minion");
 		product1.name = "p1";
 		product1.price = 9.90;
-		product1.imageId = "demo_image";
 //		product1.imageUrl = "http://localhost:8080/api/image?imageId=demo_image";
 		TchiboProduct product2 = new TchiboProduct("Theo Tiger");
 		product2.name = "p2";
 		product2.price = 4.99;
-		product2.imageId = "demo_image2";
 //		product2.imageUrl = "http://localhost:8080/api/image?imageId=demo_image2";
 		return asList(product1, product2);
 	}
@@ -179,9 +177,8 @@ class TchiboProduct {
 	String pid;
 	String name;
 	Double price;
-	String imageId;
 	String imageUrl;
-	List<TopTag> searchTags;
+	List<TopTag> searchTags = new ArrayList<>();
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -201,10 +198,6 @@ class TchiboProduct {
 
 	public String getName() {
 		return name;
-	}
-
-	public String getImageId() {
-		return imageId;
 	}
 
 	public String getImageUrl() {
