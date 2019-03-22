@@ -28,9 +28,9 @@ public class HackathonApplication {
         return "search";
     }
 
-    @GetMapping("/cart")
-    public String shoppingCart() {
-        return "shoppingCart";
+    @GetMapping("/account")
+    public String account() {
+        return "account";
     }
 
     @GetMapping("/sellProduct")
