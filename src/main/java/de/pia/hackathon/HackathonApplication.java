@@ -20,7 +20,6 @@ public class HackathonApplication {
 
     @GetMapping("/shop")
     public String indexShop() {
-
         return "indexShop";
     }
     @GetMapping("/cart")
