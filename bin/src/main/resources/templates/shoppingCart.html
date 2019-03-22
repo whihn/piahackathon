@@ -1,0 +1,139 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <h2>Top Rated</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Price</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody id="toplist">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <h2>Bought Products</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th class="text-center">Price</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody id="boughtproducts">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <h2>Selling Products</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>To</th>
+                    <th class="text-center">Price</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody id="sellingproducts">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function productRow(product) {
+        return '                <tr>\n' +
+            '                    <td class="col-md-6">\n' +
+            '                        <div class="media">\n' +
+            '                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="' + product.imageUrl + '" style="width: 72px; height: 72px;"> </a>\n' +
+            '                            <div class="media-body">\n' +
+            '                                <h4 class="media-heading"><a href="#">' + product.name + '</a></h4>\n' +
+            '                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>\n' +
+            '                            </div>\n' +
+            '                        </div></td>\n' +
+            '                    <td class="col-md-1 text-center"><strong>' + product.price + ' €</strong></td>\n' +
+            '                    <td class="col-md-1">\n' +
+            '                        <button type="button" class="btn">\n' +
+            '                            <span class="glyphicon glyphicon-thumbs-up"></span> \n' +
+            '                        </button></td>\n' +
+            '                    <td class="col-md-1">\n' +
+            '                        <button type="button" class="btn">\n' +
+            '                            <span class="glyphicon glyphicon-thumbs-down"></span> \n' +
+            '                        </button></td>\n' +
+            '                </tr>\n';
+    }
+    function transactionRow(transaction) {
+        const product = transaction.product;
+        return '                <tr>\n' +
+            '                    <td class="col-md-6">\n' +
+            '                        <div class="media">\n' +
+            '                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="' + product.imageUrl + '" style="width: 72px; height: 72px;"> </a>\n' +
+            '                            <div class="media-body">\n' +
+            '                                <h4 class="media-heading"><a href="#">' + product.name + '</a></h4>\n' +
+            '                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>\n' +
+            '                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>\n' +
+            '                            </div>\n' +
+            '                        </div></td>\n' +
+            '                    <td class="col-md-1"><strong>' + transaction.transactionDate + '</strong></td>\n' +
+            '                    <td class="col-md-1"><strong>' + transaction.toUser.name + '</strong></td>\n' +
+            '                    <td class="col-md-1 text-center"><strong>' + product.price + ' €</strong></td>\n' +
+            '                    <td class="col-md-1">\n' +
+            '                        <button type="button" class="btn btn-danger">\n' +
+            '                            <span class="glyphicon glyphicon-remove"></span> Remove\n' +
+            '                        </button></td>\n' +
+            '                </tr>\n';
+    }
+
+    axios.get('/api/profile', {
+             params: {
+             }
+    }).then((response) => {
+        const profile = response.data;
+        console.log(profile);
+
+        profile.boughtProducts.forEach((transaction) => {
+             $('#boughtproducts').append(transactionRow(transaction));
+        });
+        profile.sellingProducts.forEach((transaction) => {
+             $('#sellingproducts').append(transactionRow(transaction));
+        });
+    });
+
+    axios.get('/api/toplist', {
+             params: {
+             }
+         })
+         .then(function(response) {
+             console.log(response.data);
+
+             response.data.forEach((product) => {
+                 $('#toplist').append(productRow(product));
+
+                 // const li = document.createElement("li");
+                 // const img = document.createElement('img');
+                 // img.setAttribute('class', 'img-fluid img-thumbnail');
+                 // img.setAttribute('src', 'http://localhost:8080/api/image?imageId=' + product.imageId);
+                 // li.appendChild(img);
+                 // li.append(product.name + ' - ' + product.price + '€');
+                 // $('#toplist').append(li);
+             });
+         });
+
+</script>

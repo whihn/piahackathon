@@ -1,0 +1,92 @@
+body {
+  padding-top: 56px;
+}
+
+
+.tchibo-logo {
+  text-indent: -99999px;
+  float: left;
+  position: relative;
+  z-index: 1;
+  background-position: 0 0;
+  overflow: hidden;
+  display: block;
+  background-image: url(https://media9.tchibo-content.de/newmedia/page/img/b782847c6ea32e93/sprite.png);
+  width: 112px;
+  height: 108px;
+  color: #2259ab;
+}
+
+.tchibo-logo-small {
+  text-indent: -99999px;
+  float: left;
+  position: relative;
+  z-index: 1;
+  background-position: 0 0;
+  overflow: hidden;
+  display: block;
+  background-image: url(https://media9.tchibo-content.de/newmedia/page/img/b782847c6ea32e93/sprite.png);
+  width: 40px;
+  height: 40px;
+  color: #2259ab;
+}
+
+.tagcloud03 {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.tagcloud03 ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.tagcloud03 ul li {
+    display: inline-block;
+    margin: 0 .3em .3em 0;
+    padding: 0;
+}
+.tagcloud03 ul li a {
+    position: relative;
+    display: inline-block;
+    max-width: 100px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 2.5em 0 1em;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+.tagcloud03 li span {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    background-color: #3498db;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+.tagcloud03 ul li a:hover {
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    color: #fff;
+}
+.tagcloud03 ul li a:hover span {
+    background-color: #fff;
+    color: #3498db;
+}

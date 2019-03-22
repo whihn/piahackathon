@@ -1,8 +1,12 @@
 package de.pia.hackathon;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
+
+import de.pia.hackathon.solrservice.ProductRepository;
+import de.pia.hackathon.solrservice.ProductRepository.Product;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +18,9 @@ import static java.util.Arrays.asList;
 @RestController
 @RequestMapping("/api")
 public class SecondBeanRestController {
-
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@GetMapping("/profile")
 	@ResponseBody
 	public TchiboProfile profile() {
@@ -46,6 +52,7 @@ public class SecondBeanRestController {
 
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
+		Product product = productRepository.findById(pid).get();
 		TchiboProfile tchiboProfile = new TchiboProfile();
 		TchiboProfile bob = new TchiboProfile("bob");
 		TchiboProfile lisa = new TchiboProfile("lisa");
