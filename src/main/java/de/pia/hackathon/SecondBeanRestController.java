@@ -194,7 +194,7 @@ class TchiboProduct {
 	String price;
 	String imageUrl;
 	List<ProductTag> searchProductTags = new ArrayList<>();
-	String[] features;
+	String[] features = new String[0];
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -229,7 +229,9 @@ class TchiboProduct {
 	}
 
 	public void setFeaturesFromShortDescriptionListing(String shortDescriptionListing) {
-		features = shortDescriptionListing.split(Pattern.quote("|"));
+		if (shortDescriptionListing != null) {
+			features = shortDescriptionListing.split(Pattern.quote("|"));
+		}
 	}
 }
 
