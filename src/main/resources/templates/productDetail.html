@@ -28,6 +28,17 @@
         .productView img {
             max-width: -webkit-fill-available;
         }
+
+        .productView .collapse:after {
+            font-family: 'Glyphicons Halflings';
+            content: "\e114";
+            float: right;
+            color: grey;
+        }
+
+        .productView .collapse .show:after {
+            content: "\e080";
+        }
     </style>
 </head>
 
@@ -82,14 +93,14 @@
     const url = new URL(window.location.href);
     const pid = url.searchParams.get("pid");
     axios.get('/api/products', {
-             params: {
-                 pid: pid
-             }
-         })
-         .then(response => {
-             const product = response.data;
-             $('#productView').append(productRow(product));
-         });
+        params: {
+            pid: pid
+        }
+    })
+        .then(response => {
+            const product = response.data;
+            $('#productView').append(productRow(product));
+        });
 
     function featuresFrom(product) {
         let result = '';
@@ -107,7 +118,7 @@
             '        <p>\n' +
             '            <a class="btn btn-light btn-block text-left font-weight-bold" data-toggle="collapse" href="#description" role="button"\n' +
             '                aria-expanded="false" aria-controls="collapseExample">\n' +
-            '                Description >\n' +
+            '                Description\n' +
             '            </a>\n' +
             '        </p>\n' +
             '        <div class="collapse show" id="description">\n' +
@@ -118,7 +129,7 @@
             '        <p>\n' +
             '            <a class="btn btn-light btn-block text-left font-weight-bold" data-toggle="collapse" href="#features" role="button"\n' +
             '                aria-expanded="false" aria-controls="collapseExample">\n' +
-            '                Features >\n' +
+            '                Features\n' +
             '            </a>\n' +
             '        </p>\n' +
             '        <div class="collapse" id="features">\n' +
