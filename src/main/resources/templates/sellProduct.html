@@ -158,12 +158,23 @@
     }
 
     function confirmSell() {
- debugger;
 
         axios.get('/api/offerproduct?pid=676699932')
-            .then(() => {
-                alert('Product sold. Other people will see your product now');
-                window.location.href="/";
+            .then((result) => {
+                const profile = result.data,
+                    mainDiv = $('#mainDiv');
+
+                mainDiv.empty();
+                mainDiv.append('<b>Product added to selling list. Other people will see your offer now.</b><br/><br/>');
+                mainDiv.append('<h4 class="row justify-content-center">Selling products</h4>');
+                let centerContainer = '<div class="justify-content-center>">\n';
+
+                profile.sellingProducts.forEach((transaction) => {
+                    const product = transaction.product;
+                    centerContainer += productCard(product);
+                });
+                centerContainer += '</div>\n';
+                mainDiv.append(centerContainer);
             });
 
     }
