@@ -40,6 +40,10 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 			this.name = name;
 		}
 
+		public void setLongDescription(String longDescription) {
+			this.longDescription = longDescription;
+		}
+
 		public String getLongDescription() {
 			return longDescription;
 		}
