@@ -18,6 +18,11 @@ public class HackathonApplication {
         return "index";
     }
 
+    @GetMapping("/intro")
+    public String intro() {
+        return "intro";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";

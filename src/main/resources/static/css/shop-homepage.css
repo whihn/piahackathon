@@ -2,6 +2,11 @@ body {
   padding-top: 56px;
 }
 
+.title {
+    font-size: 120px;
+    color: #E3BE78;
+    padding-top: 40px;
+}
 .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
