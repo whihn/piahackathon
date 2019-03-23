@@ -113,12 +113,17 @@
         return result;
     }
 
+    function buyNow() {
+        alert('Congratulations. You have just bought a new truck!');
+        window.location.href = "/";
+    }
+
     function productRow(product) {
         return '        <h1>' + product.name + '</h1>\n' +
             '        <img src="' + product.imageUrl + '"\n' +
             '            alt="">\n' +
-            '        <button type="button" class="btn btn-primary btn-block my-3">JETZT KAUFEN</button>\n' +
-            '        <button type="button" class="btn btn-primary btn-block my-3">JETZT TAUSCHEN</button>\n' +
+            '        <button type="button" class="btn btn-primary btn-block my-3" onclick="buyNow()">BUY NOW</button>\n' +
+            '        <button type="button" class="btn btn-primary btn-block my-3">EXCHANGE NOW</button>\n' +
             '        <p>\n' +
             '            <a class="btn btn-light btn-block text-left font-weight-bold" data-toggle="collapse" href="#description" role="button"\n' +
             '                aria-expanded="false" aria-controls="collapseExample">\n' +

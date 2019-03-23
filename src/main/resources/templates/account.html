@@ -71,7 +71,7 @@
     <div id="boughtproducts" class="d-flex align-content-start flex-wrap">
     </div>
 </div>
-<h4 class="row justify-content-center">Selling Products</h4>
+<h4 class="row justify-content-center">Offers</h4>
 <div class="row justify-content-center">
     <div id="sellingproducts" class="d-flex align-content-start flex-wrap">
     </div>
@@ -106,7 +106,7 @@
             }
         }).then((response) => {
             const profile = response.data;
-            $('#boughtproducts').append('<div>Keine Produkte enthalten</div><br/><br/>');
+            // $('#boughtproducts').append('<div>No products</div><br/><br/>');
             profile.boughtProducts.forEach((transaction) => {
                 $('#boughtproducts').append(productCard(transaction.product));
             });

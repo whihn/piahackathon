@@ -66,8 +66,10 @@ public class SecondBeanRestController {
 		TchiboProfile lisa = new TchiboProfile("lisa");
 		tchiboProfile.addFriend(bob);
 		tchiboProfile.addFriend(lisa);
-		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product)));
+		Transaction transaction = new Transaction(new Date(), bob, productToTchiboProduct.apply(product));
+		tchiboProfile.addBoughtProduct(transaction);
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product2)));
+		tchiboProfile.addSellingProduct(transaction);
 
 		return tchiboProfile;
 	}
