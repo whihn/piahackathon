@@ -106,7 +106,7 @@
             }
         }).then((response) => {
             const profile = response.data;
-
+            $('#boughtproducts').append('<div>Keine Produkte enthalten</div><br/><br/>');
             profile.boughtProducts.forEach((transaction) => {
                 $('#boughtproducts').append(productCard(transaction.product));
             });
