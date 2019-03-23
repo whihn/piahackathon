@@ -40,6 +40,10 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 			this.name = name;
 		}
 
+		public void setLongDescription(String longDescription) {
+			this.longDescription = longDescription;
+		}
+
 		public String getLongDescription() {
 			return longDescription;
 		}
@@ -59,6 +63,10 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 		}
 		public void setImageUrl(String imageUrl) {
 			this.imageUrl = imageUrl;
+		}
+
+		public void setShortDescriptionListing(String shortDescriptionListing) {
+			this.shortDescriptionListing = shortDescriptionListing;
 		}
 
 		public void setColor(String color) {

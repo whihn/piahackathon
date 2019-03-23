@@ -22,6 +22,7 @@ import de.pia.hackathon.solrservice.ProductRepository.Product;
 @RequestMapping("/api")
 public class SecondBeanRestController {
 
+	public static final String DANNY_DINO_PID = "676699932";
 	@Autowired private ProductRepository productRepository;
 
 	@GetMapping("/profile")
@@ -53,12 +54,8 @@ public class SecondBeanRestController {
 	@GetMapping("/offerproduct")
 	public TchiboProfile offerProduct(@RequestParam String pid) {
 		Product product;
-		if ("676699932".equals(pid)) {
-			product = new Product();
-			product.setId(pid);
-			product.setName("Danny Dino");
-			product.setPrice("99,99");
-			product.setImageUrl("http://localhost:8080/images/professionalPhotoFromTchibo.jpg");
+		if (DANNY_DINO_PID.equals(pid)) {
+			product = getDannyDinoProduct();
 		}
 		else {
 			product = productRepository.findById(pid).get();
@@ -73,6 +70,23 @@ public class SecondBeanRestController {
 		tchiboProfile.addSellingProduct(new Transaction(new Date(), bob, productToTchiboProduct.apply(product2)));
 
 		return tchiboProfile;
+	}
+
+	private Product getDannyDinoProduct() {
+		Product product = new Product();
+		product.setId(DANNY_DINO_PID);
+		product.setName("Danny Dino");
+		product.setPrice("99,99");
+		product.setImageUrl("http://localhost:8080/images/professionalPhotoFromTchibo.jpg");
+		product.setLongDescription(
+				"Suitable for all handlebar steams as shown. Attached without tools. Very easy installation, mounting "
+						+ "opening approx 2cm, strap length approx 35.5cm");
+		product.setShortDescriptionListing(
+				"Suitable for all handlebar steams as shown|"
+						+ "Attached without tools|"
+						+ "Very easy installation|"
+						+ "mounting opening approx 2cm, strap length approx 35.5cm");
+		return product;
 	}
 
 	Function<Product, TchiboProduct> productToTchiboProduct = t -> {
@@ -99,7 +113,12 @@ public class SecondBeanRestController {
 
 	@GetMapping("/products")
 	public TchiboProduct getProduct(@RequestParam String pid) {
-		return productToTchiboProduct.apply(productRepository.findById(pid).get());
+		if (DANNY_DINO_PID.equals(pid)) {
+			return productToTchiboProduct.apply(getDannyDinoProduct());
+		}
+		else {
+			return productToTchiboProduct.apply(productRepository.findById(pid).get());
+		}
 	}
 
 	@GetMapping("/tagclicked")
@@ -112,7 +131,7 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toptags")
 	public List<ProductTag> topTags() {
-		return asList(new ProductTag("auto", 4),
+		return asList(new ProductTag("Kaffee", 4),
 				new ProductTag("Schwarz", 5),
 				new ProductTag("5er Pack", 4));
 	}
@@ -175,7 +194,7 @@ class TchiboProduct {
 	String price;
 	String imageUrl;
 	List<ProductTag> searchProductTags = new ArrayList<>();
-	String[] features;
+	String[] features = new String[0];
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -210,7 +229,9 @@ class TchiboProduct {
 	}
 
 	public void setFeaturesFromShortDescriptionListing(String shortDescriptionListing) {
-		features = shortDescriptionListing.split(Pattern.quote("|"));
+		if (shortDescriptionListing != null) {
+			features = shortDescriptionListing.split(Pattern.quote("|"));
+		}
 	}
 }
 
