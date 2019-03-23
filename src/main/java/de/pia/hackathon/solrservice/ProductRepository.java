@@ -39,6 +39,15 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 		public void setName(String name) {
 			this.name = name;
 		}
+
+		public String getLongDescription() {
+			return longDescription;
+		}
+
+		public String getShortDescriptionListing() {
+			return shortDescriptionListing;
+		}
+
 		public String getPrice() {
 			return price;
 		}
@@ -77,6 +86,10 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 		private String id;
 		@Indexed(name = "TITLE", type = "string")
 		private String name;
+		@Indexed(name = "LONG_DESCRIPTION", type = "string")
+		private String longDescription;
+		@Indexed(name = "SHORT_DESCRIPTION_LISTING", type = "string")
+		private String shortDescriptionListing;
 		@Indexed(name = "PRICE", type = "string")
 		private String price;
 		@Indexed(name = "MAIN_IMAGE_URL", type = "string")

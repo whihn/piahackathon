@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -79,6 +80,8 @@ public class SecondBeanRestController {
 		myProduct.pid = t.getId();
 		myProduct.price = t.getPrice();
 		myProduct.imageUrl = t.getImageUrl();
+		myProduct.longDescription = t.getLongDescription();
+		myProduct.setFeaturesFromShortDescriptionListing(t.getShortDescriptionListing());
 		myProduct.searchProductTags.add(new ProductTag(t.getColor(), 10));
 		myProduct.searchProductTags.add(new ProductTag(t.getAssortmentCategory1(), 11));
 		myProduct.searchProductTags.add(new ProductTag(t.getAssortmentCategory2(), 12));
@@ -92,6 +95,11 @@ public class SecondBeanRestController {
 				.stream()
 				.map(productToTchiboProduct)
 				.collect(Collectors.toList());
+	}
+
+	@GetMapping("/products")
+	public TchiboProduct getProduct(@RequestParam String pid) {
+		return productToTchiboProduct.apply(productRepository.findById(pid).get());
 	}
 
 	@GetMapping("/tagclicked")
@@ -161,11 +169,13 @@ class ProductTag {
 
 class TchiboProduct {
 
+	String longDescription;
 	String pid;
 	String name;
 	String price;
 	String imageUrl;
 	List<ProductTag> searchProductTags = new ArrayList<>();
+	String[] features;
 
 	public TchiboProduct(String name) {
 		this.name = name;
@@ -187,8 +197,20 @@ class TchiboProduct {
 		return name;
 	}
 
+	public String getLongDescription() {
+		return longDescription;
+	}
+
+	public String[] getFeatures() {
+		return features;
+	}
+
 	public String getImageUrl() {
 		return imageUrl;
+	}
+
+	public void setFeaturesFromShortDescriptionListing(String shortDescriptionListing) {
+		features = shortDescriptionListing.split(Pattern.quote("|"));
 	}
 }
 
