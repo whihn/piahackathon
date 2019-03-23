@@ -131,7 +131,7 @@ public class SecondBeanRestController {
 
 	@GetMapping("/toptags")
 	public List<ProductTag> topTags() {
-		return asList(new ProductTag("auto", 4),
+		return asList(new ProductTag("Kaffee", 4),
 				new ProductTag("Schwarz", 5),
 				new ProductTag("5er Pack", 4));
 	}
