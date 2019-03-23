@@ -61,6 +61,10 @@ public interface ProductRepository extends SolrCrudRepository<Product, String> {
 			this.imageUrl = imageUrl;
 		}
 
+		public void setShortDescriptionListing(String shortDescriptionListing) {
+			this.shortDescriptionListing = shortDescriptionListing;
+		}
+
 		public void setColor(String color) {
 			this.color = color;
 		}

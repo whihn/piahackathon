@@ -59,6 +59,11 @@ public class SecondBeanRestController {
 			product.setName("Danny Dino");
 			product.setPrice("99,99");
 			product.setImageUrl("http://localhost:8080/images/professionalPhotoFromTchibo.jpg");
+			product.setShortDescriptionListing(
+					"Suitable for all handlebar steams as shown|"
+							+ "Attached without tools|"
+							+ "Very easy installation|"
+							+ "mounting opening approx 2cm, strap length approx 35.5cm");
 		}
 		else {
 			product = productRepository.findById(pid).get();
