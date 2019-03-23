@@ -58,6 +58,7 @@
     </div>
 </nav>
 
+<p/>
 <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
         <form class="card card-sm">
@@ -114,27 +115,12 @@
 </button>
 </body>
 <script>
-    function productRow(product) {
-        return '                <tr>\n' +
-            '                    <td class="col-md-6">\n' +
-            '                        <div class="media">\n' +
-            '                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="' + product.imageUrl + '" style="width: 72px; height: 72px;"> </a>\n' +
-            '                            <div class="media-body">\n' +
-            '                                <h4 class="media-heading"><a href="#">' + product.name + '</a></h4>\n' +
-            '                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>\n' +
-            '                            </div>\n' +
-            '                        </div></td>\n' +
-            '                    <td class="col-md-1 text-center"><strong>' + product.price + ' €</strong></td>\n' +
-            '                    <td class="col-md-1">\n' +
-            '                        <button type="button" class="btn">\n' +
-            '                            <span class="glyphicon glyphicon-thumbs-up"></span> \n' +
-            '                        </button></td>\n' +
-            '                    <td class="col-md-1">\n' +
-            '                        <button type="button" class="btn">\n' +
-            '                            <span class="glyphicon glyphicon-thumbs-down"></span> \n' +
-            '                        </button></td>\n' +
-            '                </tr>\n';
-    }
+    axios.get('/api/search', {
+             params: {
+                 searchText: 'kaffee'
+             }
+         })
+         .then(onSearchResponse);
 
     function productCard(product) {
         return ' <div class="mdl-card mdl-shadow--2dp">\n' +
@@ -159,6 +145,9 @@
         $('#toptags').empty();
 
         tags.forEach((name) => {
+            if (!name.name || name.name === 'null') {
+                return;
+            }
             const li = document.createElement("li");
             const a = document.createElement('a');
             a.setAttribute('onclick', 'onTagClicked(\'' + name.name + '\')');
@@ -175,7 +164,6 @@
         const products = response.data;
         const tags = [];
 
-        console.log('searchResponse: ', products);
         $('#cardContainer').empty();
 
         products.forEach((product) => {
