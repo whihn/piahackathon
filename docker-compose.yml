@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8888:8888"
+  solr: 
+    container_name: solr
+    image: solr:7.7.1
+    ports:
+      - "8983:8983"
+    volumes:
+          - data:/opt/solr/server/solr/
+volumes:
+  data:
