@@ -10,6 +10,6 @@ services:
     ports:
       - "8983:8983"
     volumes:
-          - data:/opt/solr/server/solr/
+          - ./data:/opt/solr/server/solr/
 volumes:
   data:
